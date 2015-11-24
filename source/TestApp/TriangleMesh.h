@@ -1,0 +1,24 @@
+#ifndef TRIANGLEMESH_H
+#define TRIANGLEMESH_H
+
+#include "Mesh.h"
+#include "PMath.h"
+using namespace RenderCore;
+using namespace PMath;
+
+class TriangleMesh : public Mesh
+{
+public:
+	struct Vertex
+	{
+		Vec3 position;
+		Vec4 color;
+	};
+
+	TriangleMesh(const std::string& meshName);
+	virtual ~TriangleMesh();
+
+	virtual void Initialize(DirectXRenderer* renderer);
+	virtual const unsigned int VertexSize() const;
+};
+#endif
