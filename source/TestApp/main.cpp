@@ -3,6 +3,7 @@
 #include "ColorShader.h"
 #include "ColorMaterial.h"
 #include "TriangleMesh.h"
+#include "CubeMesh.h"
 #include "Model.h"
 using namespace RenderCore;
 
@@ -22,18 +23,20 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	dx.AddMaterial("ColorMaterial", cm);
 	dx.LinkMaterialToShader("ColorShader", "ColorMaterial");
 
-	TriangleMesh* tm = new TriangleMesh("Triangle");
-	tm->Initialize(&dx);
+	//TriangleMesh* tm = new TriangleMesh("Triangle");
+	//tm->Initialize(&dx);
 
-	RenderCore::Model* m = new Model("Triangle");
-	m->AddMesh(tm);
-	dx.AddMesh(tm);
+	CubeMesh* c = new CubeMesh("Cube");
+	c->Initialize(&dx);
+
+	RenderCore::Model* m = new Model("Cube");
+	m->AddMesh(c);
 
 	RenderCore::Renderable* r = new Renderable(m);
 
-	dx.AddModel("Triangle", m);
+	dx.AddModel("Cube", m);
 	dx.AddRenderable(r);
-	dx.LinkMeshToMaterial("ColorMaterial", tm);
+	dx.LinkRenderableToMaterial("ColorMaterial", r);
 
 	MSG message;
 	ZeroMemory(&message, sizeof(message));

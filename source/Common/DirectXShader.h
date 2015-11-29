@@ -23,11 +23,14 @@ namespace RenderCore
 
 		virtual void Update(const Core::GameTime& gameTime) = 0;
 		virtual void SetPerFrameBuffer(ID3D11DeviceContext* deviceContext, Camera* camera);
+		virtual void SetPerInstanceBuffer(ID3D11DeviceContext* deviceContext, Renderable* renderable);
 
 	protected:
 		ID3D11VertexShader* mVertexShader;
 		ID3D11PixelShader* mPixelShader;
 		ID3D11InputLayout *mInputLayout;
+		ID3D11Buffer* mPerFrameBuffer;
+		ID3D11Buffer* mPerInstanceBuffer;
 	};
 }
 #endif

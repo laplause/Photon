@@ -7,7 +7,8 @@ DirectXShader::DirectXShader(const std::string& shaderName) :
 Shader(shaderName), 
 mVertexShader(nullptr), 
 mPixelShader(nullptr), 
-mInputLayout(nullptr)
+mInputLayout(nullptr),
+mPerFrameBuffer(nullptr)
 {
 
 }
@@ -17,6 +18,7 @@ DirectXShader::~DirectXShader()
 	RELEASEOBJECT(mVertexShader);
 	RELEASEOBJECT(mPixelShader);
 	RELEASEOBJECT(mInputLayout);
+	RELEASEOBJECT(mPerFrameBuffer);
 }
 
 void DirectXShader::Initialize(const std::string& vsFileName, const std::string& psFileName, DirectXRenderer* renderer)
@@ -57,6 +59,11 @@ void DirectXShader::SetActiveShader(ID3D11DeviceContext* deviceContext)
 }
 
 void DirectXShader::SetPerFrameBuffer(ID3D11DeviceContext* deviceContext, Camera* camera)
+{
+
+}
+
+void DirectXShader::SetPerInstanceBuffer(ID3D11DeviceContext* deviceContext, Renderable* renderable)
 {
 
 }

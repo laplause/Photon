@@ -9,7 +9,7 @@ mMaterialTable(),
 mModelTable(),
 mRenderableList(),
 mShaderIndexToMaterialMap(),
-mMaterialIndexToMeshMap(),
+mMaterialIndexToRenderableMap(),
 mWindow(nullptr),
 mScreenWidth(800),
 mScreeHeight(600),
@@ -24,7 +24,7 @@ mMaterialTable(),
 mModelTable(),
 mRenderableList(),
 mShaderIndexToMaterialMap(),
-mMaterialIndexToMeshMap(),
+mMaterialIndexToRenderableMap(),
 mWindow(nullptr),
 mScreenWidth(800),
 mScreeHeight(600),
@@ -85,13 +85,6 @@ void Renderer::AddModel(const std::string& modelName, Model* model)
 	mModelTable[modelName] = model;
 }
 
-void Renderer::AddMesh(Mesh* mesh)
-{
-	ASSERT(mesh != nullptr, "Trying to add a null mesh");
-
-	mMeshList.push_back(mesh);
-}
-
 void Renderer::AddRenderable(Renderable* renderable)
 {
 	ASSERT(renderable != nullptr, "Trying to add a null renderable");
@@ -128,11 +121,11 @@ void Renderer::LinkMaterialToShader(const std::string& shaderName, Material* mat
 	mShaderIndexToMaterialMap[shaderName].push_back(material);
 }
 
-void Renderer::LinkMeshToMaterial(const std::string& materialName, Mesh* mesh)
+void Renderer::LinkRenderableToMaterial(const std::string& materialName, Renderable* renderable)
 {
-	ASSERT(mesh != nullptr, "Cannot link null mesh to a material");
+	ASSERT(renderable != nullptr, "Cannot link null renderable to a material");
 
-	mMaterialIndexToMeshMap[materialName].push_back(mesh);
+	mMaterialIndexToRenderableMap[materialName].push_back(renderable);
 }
 
 void Renderer::Shutdown()

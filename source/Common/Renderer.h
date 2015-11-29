@@ -36,7 +36,6 @@ namespace RenderCore
 		void AddShader(const std::string& shaderName, DirectXShader* shader);
 		void AddMaterial(const std::string& materialName, Material* material);
 		void AddModel(const std::string& modelName, Model* model);
-		void AddMesh(Mesh* mesh);
 		void AddRenderable(Renderable* renderable);
 
 		Material* GetMaterial(const std::string& materialName);
@@ -45,7 +44,7 @@ namespace RenderCore
 
 		void LinkMaterialToShader(const std::string& shaderName, const std::string& materialName);
 		void LinkMaterialToShader(const std::string& shaderName, Material* material);
-		void LinkMeshToMaterial(const std::string& materialName, Mesh* mesh);
+		void LinkRenderableToMaterial(const std::string& materialName, Renderable* renderable);
 
 		const SystemWindow* GetWindow() const;
 
@@ -53,10 +52,9 @@ namespace RenderCore
 		std::map<std::string, DirectXShader*> mShaderTable;
 		std::map<std::string, Material*> mMaterialTable;
 		std::map<std::string, Model*> mModelTable;
-		std::vector<Mesh*> mMeshList;
 		std::vector<Renderable*> mRenderableList;
 		std::map<std::string, std::vector<Material*> > mShaderIndexToMaterialMap;
-		std::map<std::string, std::vector<Mesh*> > mMaterialIndexToMeshMap;
+		std::map<std::string, std::vector<Renderable*> > mMaterialIndexToRenderableMap;
 		SystemWindow* mWindow;
 		unsigned int mScreenWidth;
 		unsigned int mScreeHeight;

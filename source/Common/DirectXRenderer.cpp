@@ -36,7 +36,7 @@ void DirectXRenderer::Initialize()
 	camera.Reset();
 	camera.SetAspectRatio((float)mScreenWidth/(float)mScreeHeight);
 	camera.Initialize();
-	camera.SetPosition(0, 0, -10.0f);
+	camera.SetPosition(3.0f, 0, -10.0f);
 }
 
 void DirectXRenderer::Shutdown()
@@ -225,26 +225,32 @@ void DirectXRenderer::Draw(const Core::GameTime& gameTime)
 	for (std::map<std::string, DirectXShader*>::iterator it = mShaderTable.begin(); it != mShaderTable.end(); ++it)
 	{
 		// Set the active shader
-		it->second->SetActiveShader(mDirect3DDeviceContext);
+		DirectXShader* shader = it->second;
+		shader->SetActiveShader(mDirect3DDeviceContext);
+		shader->SetPerFrameBuffer(mDirect3DDeviceContext, &camera);
 
 		std::vector<Material*>& materials = mShaderIndexToMaterialMap[it->second->ShaderName()];
 		for (std::vector<Material*>::iterator it = materials.begin(); it != materials.end(); ++it)
 		{
 			// Do material stuff
-			std::vector<Mesh*>& renderables = mMaterialIndexToMeshMap[(*it)->MaterialName()];
-			for (std::vector<Mesh*>::iterator it = renderables.begin(); it != renderables.end(); ++it)
+			std::vector<Renderable*>& renderables = mMaterialIndexToRenderableMap[(*it)->MaterialName()];
+			for (std::vector<Renderable*>::iterator it = renderables.begin(); it != renderables.end(); ++it)
 			{
-				unsigned int stride = (*it)->VertexSize();
+				shader->SetPerInstanceBuffer(mDirect3DDeviceContext, *it);
+
+				Mesh* mesh = (*it)->GetModel()->GetMeshes().at(0);
+
+				unsigned int stride = mesh->VertexSize();
 				unsigned int offset = 0;
 
-				ID3D11Buffer* vBuffer = (*it)->GetVertexBuffer();
-				ID3D11Buffer* iBuffer = (*it)->GetIndexBuffer();
+				ID3D11Buffer* vBuffer = mesh->GetVertexBuffer();
+				ID3D11Buffer* iBuffer = mesh->GetIndexBuffer();
 
 				mDirect3DDeviceContext->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
 				mDirect3DDeviceContext->IASetIndexBuffer(iBuffer, DXGI_FORMAT_R32_UINT, 0);
 				mDirect3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-				mDirect3DDeviceContext->DrawIndexed(3, 0, 0);
+				mDirect3DDeviceContext->DrawIndexed(36, 0, 0);
 			}
 		}
 	}

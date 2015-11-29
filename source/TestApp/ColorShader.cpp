@@ -25,7 +25,7 @@ void ColorShader::Initialize(const std::string& vsFileName, const std::string& p
 
 	polygonLayout[0].SemanticName = "POSITION";
 	polygonLayout[0].SemanticIndex = 0;
-	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	polygonLayout[0].InputSlot = 0;
 	polygonLayout[0].AlignedByteOffset = 0;
 	polygonLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
@@ -42,6 +42,24 @@ void ColorShader::Initialize(const std::string& vsFileName, const std::string& p
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);
 
 	renderer->Direct3DDevice()->CreateInputLayout(polygonLayout, numElements, mVertexShaderByteCode, mVertexShaderFileSize, &mInputLayout);
+
+	D3D11_BUFFER_DESC perFrameBufferDesc, perInstanceBufferDesc;
+	perFrameBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	perFrameBufferDesc.ByteWidth = sizeof(PerFrameBuffer);
+	perFrameBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	perFrameBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	perFrameBufferDesc.MiscFlags = 0;
+	perFrameBufferDesc.StructureByteStride = 0;
+
+	perInstanceBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	perInstanceBufferDesc.ByteWidth = sizeof(PerInstanceBuffer);
+	perInstanceBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	perInstanceBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	perInstanceBufferDesc.MiscFlags = 0;
+	perInstanceBufferDesc.StructureByteStride = 0;
+
+	renderer->Direct3DDevice()->CreateBuffer(&perFrameBufferDesc, nullptr, &mPerFrameBuffer);
+	renderer->Direct3DDevice()->CreateBuffer(&perInstanceBufferDesc, nullptr, &mPerInstanceBuffer);
 }
 
 void ColorShader::SetActiveShader(ID3D11DeviceContext* deviceContext)
@@ -53,4 +71,40 @@ void ColorShader::SetActiveShader(ID3D11DeviceContext* deviceContext)
 void ColorShader::SetPerFrameBuffer(ID3D11DeviceContext* deviceContext, Camera* camera)
 {
 	DirectXShader::SetPerFrameBuffer(deviceContext, camera);
+
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	PerFrameBuffer* perFrameData;
+	unsigned int bufferNumber;
+
+	deviceContext->Map(mPerFrameBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	perFrameData = (PerFrameBuffer*)mappedResource.pData;
+
+	perFrameData->view = camera->ViewMatrix();
+	perFrameData->projection = camera->ProjectionMatrix();
+
+	deviceContext->Unmap(mPerFrameBuffer, 0);
+
+	bufferNumber = 0;
+
+	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &mPerFrameBuffer);
+}
+
+void ColorShader::SetPerInstanceBuffer(ID3D11DeviceContext* deviceContext, Renderable* renderable)
+{
+	DirectXShader::SetPerInstanceBuffer(deviceContext, renderable);
+
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	PerInstanceBuffer* perInstanceData;
+	unsigned int bufferNumber;
+
+	deviceContext->Map(mPerInstanceBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	perInstanceData = (PerInstanceBuffer*)mappedResource.pData;
+
+	perInstanceData->world = renderable->GetTransform();
+
+	deviceContext->Unmap(mPerInstanceBuffer, 0);
+
+	bufferNumber = 1;
+
+	deviceContext->VSSetConstantBuffers(bufferNumber, 1, &mPerInstanceBuffer);
 }

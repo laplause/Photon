@@ -27,19 +27,19 @@ void CubeMesh::Initialize(DirectXRenderer* renderer)
 
 	// left-bottom-front
 	vertices[0].position = Vec4(-1.0f, -1.0f, -1.0f, 1.0f);
-	vertices[0].color = Vec4(1.0f, 0, 0, 1.0f);
+	vertices[0].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// left-top-front
 	vertices[1].position = Vec4(-1.0f, 1.0f, -1.0f, 1.0f);
-	vertices[1].color = Vec4(0, 1.0f, 0, 1.0f);
+	vertices[1].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// right-top-front
 	vertices[2].position = Vec4(1.0f, 1.0f, -1.0f, 1.0f);
-	vertices[2].color = Vec4(0, 0, 1.0f, 1.0f);
+	vertices[2].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// right-bottom-front
 	vertices[3].position = Vec4(1.0f, -1.0f, -1.0f, 1.0f);
-	vertices[3].color = Vec4(1.0f, 1.0f, 0, 1.0f);
+	vertices[3].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// left-bottom-back
 	vertices[4].position = Vec4(-1.0f, -1.0f, 1.0f, 1.0f);
@@ -47,15 +47,15 @@ void CubeMesh::Initialize(DirectXRenderer* renderer)
 
 	// left-top-back
 	vertices[5].position = Vec4(-1.0f, 1.0f, 1.0f, 1.0f);
-	vertices[5].color = Vec4(0, 1.0f, 1.0f, 1.0f);
+	vertices[5].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// right-top-back
 	vertices[6].position = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
-	vertices[6].color = Vec4(1.0f, 0, 0, 1.0f);
+	vertices[6].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// right-bottom-back
 	vertices[7].position = Vec4(1.0f, -1.0f, 1.0f, 1.0f);
-	vertices[7].color = Vec4(0, 1.0f, 0, 1.0f);
+	vertices[7].color = Vec4(1.0f, 0, 1.0f, 1.0f);
 
 	// Front face
 	indices[0] = 0; indices[1] = 1; indices[2] = 2;
