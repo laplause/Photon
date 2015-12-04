@@ -29,7 +29,7 @@ void Camera::Update(const Core::GameTime& gameTime)
 void Camera::SetPosition(float x, float y, float z)
 {
 	mTransform.row3.x = x;
-	mTransform.row3.z = y;
+	mTransform.row3.y = y;
 	mTransform.row3.z = z;
 }
 

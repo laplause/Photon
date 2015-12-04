@@ -31,23 +31,23 @@ void CubeMesh::Initialize(DirectXRenderer* renderer)
 
 	// left-top-front
 	vertices[1].position = Vec4(-1.0f, 1.0f, -1.0f, 1.0f);
-	vertices[1].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[1].color = Vec4(0.0f, 0, 1.0f, 1.0f);
 
 	// right-top-front
 	vertices[2].position = Vec4(1.0f, 1.0f, -1.0f, 1.0f);
-	vertices[2].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[2].color = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// right-bottom-front
 	vertices[3].position = Vec4(1.0f, -1.0f, -1.0f, 1.0f);
-	vertices[3].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[3].color = Vec4(0.0f, 0, 0.0f, 1.0f);
 
 	// left-bottom-back
 	vertices[4].position = Vec4(-1.0f, -1.0f, 1.0f, 1.0f);
-	vertices[4].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[4].color = Vec4(1.0f, 0, 0.0f, 1.0f);
 
 	// left-top-back
 	vertices[5].position = Vec4(-1.0f, 1.0f, 1.0f, 1.0f);
-	vertices[5].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[5].color = Vec4(0.0f, 1.0f, 0.0f, 1.0f);
 
 	// right-top-back
 	vertices[6].position = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -55,7 +55,7 @@ void CubeMesh::Initialize(DirectXRenderer* renderer)
 
 	// right-bottom-back
 	vertices[7].position = Vec4(1.0f, -1.0f, 1.0f, 1.0f);
-	vertices[7].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[7].color = Vec4(0.0f, 1.0f, 1.0f, 1.0f);
 
 	// Front face
 	indices[0] = 0; indices[1] = 1; indices[2] = 2;
@@ -78,8 +78,8 @@ void CubeMesh::Initialize(DirectXRenderer* renderer)
 	indices[27] = 1; indices[28] = 6; indices[29] = 2;
 
 	// Bottom Face
-	indices[30] = 0; indices[31] = 4; indices[32] = 7;
-	indices[33] = 0; indices[34] = 7; indices[35] = 3;
+	indices[30] = 4; indices[31] = 0; indices[32] = 3;
+	indices[33] = 4; indices[34] = 3; indices[35] = 7;
 
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	vertexBufferDesc.ByteWidth = sizeof(Vertex) * mVertexCount;

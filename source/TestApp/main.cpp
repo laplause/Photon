@@ -23,8 +23,8 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	dx.AddMaterial("ColorMaterial", cm);
 	dx.LinkMaterialToShader("ColorShader", "ColorMaterial");
 
-	//TriangleMesh* tm = new TriangleMesh("Triangle");
-	//tm->Initialize(&dx);
+	TriangleMesh* tm = new TriangleMesh("Triangle");
+	tm->Initialize(&dx);
 
 	CubeMesh* c = new CubeMesh("Cube");
 	c->Initialize(&dx);
@@ -32,11 +32,17 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	RenderCore::Model* m = new Model("Cube");
 	m->AddMesh(c);
 
-	RenderCore::Renderable* r = new Renderable(m);
+	Renderable *r = new Renderable(m);
+	//RenderCore::Renderable* r = new Renderable(m);
+	//r->SetPosition(0, 0, 0.0f);
+	//RenderCore::Renderable* offsetR = new Renderable(m);
+	//offsetR->SetPosition(0, 0, 0);
 
 	dx.AddModel("Cube", m);
 	dx.AddRenderable(r);
+	//dx.AddRenderable(offsetR);
 	dx.LinkRenderableToMaterial("ColorMaterial", r);
+	//dx.LinkRenderableToMaterial("ColorMaterial", offsetR);
 
 	MSG message;
 	ZeroMemory(&message, sizeof(message));

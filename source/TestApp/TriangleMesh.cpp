@@ -29,10 +29,10 @@ void TriangleMesh::Initialize(DirectXRenderer* renderer)
 	vertices[0].color = Vec4(1.0f, 0, 0, 1.0f);
 
 	vertices[1].position = Vec3(0, 1.0f, 0);
-	vertices[1].color = Vec4(1.0f, 1.0f, 0, 1.0f);
+	vertices[1].color = Vec4(1.0f, 0, 0, 1.0f);
 
 	vertices[2].position = Vec3(1.0f, -1.0f, 0);
-	vertices[2].color = Vec4(1.0f, 0, 1.0f, 1.0f);
+	vertices[2].color = Vec4(1.0f, 0, 0, 1.0f);
 
 	indices[0] = 0;
 	indices[1] = 1;

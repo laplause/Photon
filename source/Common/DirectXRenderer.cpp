@@ -222,35 +222,40 @@ void DirectXRenderer::Draw(const Core::GameTime& gameTime)
 	// Render all the active/visible render components. 
 	// Components are currently batched by material. This assumes every model uses one material (this assumption will be worked on later to allow multi material models)
 	// Materials are batched by the shader they use. All of this reduces the amount of render state that needs to change between draw calls.
-	for (std::map<std::string, DirectXShader*>::iterator it = mShaderTable.begin(); it != mShaderTable.end(); ++it)
+	for (std::map<std::string, DirectXShader*>::iterator sIt = mShaderTable.begin(); sIt != mShaderTable.end(); ++sIt)
 	{
 		// Set the active shader
-		DirectXShader* shader = it->second;
+		DirectXShader* shader = sIt->second;
 		shader->SetActiveShader(mDirect3DDeviceContext);
 		shader->SetPerFrameBuffer(mDirect3DDeviceContext, &camera);
 
-		std::vector<Material*>& materials = mShaderIndexToMaterialMap[it->second->ShaderName()];
-		for (std::vector<Material*>::iterator it = materials.begin(); it != materials.end(); ++it)
+		std::vector<Material*>& materials = mShaderIndexToMaterialMap[sIt->second->ShaderName()];
+		for (std::vector<Material*>::iterator mIt = materials.begin(); mIt != materials.end(); ++mIt)
 		{
 			// Do material stuff
-			std::vector<Renderable*>& renderables = mMaterialIndexToRenderableMap[(*it)->MaterialName()];
-			for (std::vector<Renderable*>::iterator it = renderables.begin(); it != renderables.end(); ++it)
+			std::vector<Renderable*>& renderables = mMaterialIndexToRenderableMap[(*mIt)->MaterialName()];
+			for (std::vector<Renderable*>::iterator rIt = renderables.begin(); rIt != renderables.end(); ++rIt)
 			{
-				shader->SetPerInstanceBuffer(mDirect3DDeviceContext, *it);
+				shader->SetPerInstanceBuffer(mDirect3DDeviceContext, *rIt);
+				
+				const std::vector<Mesh*>& meshes = (*rIt)->GetModel()->GetMeshes();
 
-				Mesh* mesh = (*it)->GetModel()->GetMeshes().at(0);
+				for (std::vector<Mesh*>::const_iterator it = meshes.begin(); it != meshes.end(); ++it)
+				{
+					Mesh* mesh = (*it);
 
-				unsigned int stride = mesh->VertexSize();
-				unsigned int offset = 0;
+					unsigned int stride = mesh->VertexSize();
+					unsigned int offset = 0;
 
-				ID3D11Buffer* vBuffer = mesh->GetVertexBuffer();
-				ID3D11Buffer* iBuffer = mesh->GetIndexBuffer();
+					ID3D11Buffer* vBuffer = mesh->GetVertexBuffer();
+					ID3D11Buffer* iBuffer = mesh->GetIndexBuffer();
 
-				mDirect3DDeviceContext->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
-				mDirect3DDeviceContext->IASetIndexBuffer(iBuffer, DXGI_FORMAT_R32_UINT, 0);
-				mDirect3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+					mDirect3DDeviceContext->IASetVertexBuffers(0, 1, &vBuffer, &stride, &offset);
+					mDirect3DDeviceContext->IASetIndexBuffer(iBuffer, DXGI_FORMAT_R32_UINT, 0);
+					mDirect3DDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-				mDirect3DDeviceContext->DrawIndexed(36, 0, 0);
+					mDirect3DDeviceContext->DrawIndexed(mesh->NumIndices(), 0, 0);
+				}
 			}
 		}
 	}

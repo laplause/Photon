@@ -20,6 +20,7 @@ namespace RenderCore
 		const std::string& MeshName() const;
 		ID3D11Buffer* GetVertexBuffer() const;
 		ID3D11Buffer* GetIndexBuffer() const;
+		const int NumIndices() const;
 
 	protected:
 		std::string mName;

@@ -31,3 +31,15 @@ const Mat4x4& Renderable::GetTransform() const
 {
 	return mTransform;
 }
+
+void Renderable::SetPosition(float x, float y, float z)
+{
+	mTransform.row0.w = x;
+	mTransform.row1.w = y;
+	mTransform.row2.w = z;
+}
+
+void Renderable::SetPosition(Vec3& position)
+{
+	Renderable::SetPosition(position.x, position.y, position.z);
+}

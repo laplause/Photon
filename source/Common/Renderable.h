@@ -19,6 +19,8 @@ namespace RenderCore
 
 		const Model* GetModel() const;
 		const Mat4x4& GetTransform() const;
+		void SetPosition(float x, float y, float z);
+		void SetPosition(Vec3& position);
 
 	protected:
 		Mat4x4 mTransform;

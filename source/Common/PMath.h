@@ -451,6 +451,15 @@ namespace PMath
 					  0, 0, 0, 1.0f);
 	}
 
+	inline Mat4x4 Translate(Vec3& position, Mat4x4& transform)
+	{
+		transform.row0.w = position.x;
+		transform.row1.w = position.y;
+		transform.row2.w = position.z;
+
+		return transform;
+	}
+
 	// This is a left handed rotation column matrix which rotates about the X axis.
 	inline Mat4x4 MatrixRotationX(float angle)
 	{
@@ -765,7 +774,7 @@ namespace PMath
 	inline Mat4x4 DirectXPerspectiveMatrix(float fovY, float aspectRatio, float n, float f)
 	{
 		float zoomY = 1 / tan(fovY / 2);
-		float zoomX = zoomY * aspectRatio;
+		float zoomX = zoomY / aspectRatio;
 
 		return Mat4x4(zoomX, 0,     0,         0,
 			          0,     zoomY, 0,         0,

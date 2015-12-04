@@ -37,3 +37,8 @@ ID3D11Buffer* Mesh::GetIndexBuffer() const
 {
 	return mIndexBuffer;
 }
+
+const int Mesh::NumIndices() const
+{
+	return mIndexCount;
+}
