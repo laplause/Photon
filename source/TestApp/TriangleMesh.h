@@ -11,7 +11,7 @@ class TriangleMesh : public Mesh
 public:
 	struct Vertex
 	{
-		Vec3 position;
+		Vec4 position;
 		Vec4 color;
 	};
 
