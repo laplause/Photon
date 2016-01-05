@@ -11,18 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{19EF6EE9-6710-470B-93D0-A70F05D2A45A}</ProjectGuid>
-    <RootNamespace>TestApp</RootNamespace>
+    <ProjectGuid>{2F9692C1-07A8-4CEB-B03C-694E1CB61D30}</ProjectGuid>
+    <RootNamespace>TinyXml</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -39,70 +39,61 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)../bin</OutDir>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
     <TargetName>$(ProjectName)D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)../bin</OutDir>
+    <OutDir>$(ProjectDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)../include</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>$(SolutionDir)../include</AdditionalUsingDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <DisableSpecificWarnings>4100; 4481;4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)../lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CommonD.lib;TinyXmlD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(SolutionDir)..\lib"
+copy "$(ProjectDir)$(Configuration)\$(ProjectName)D.lib" "$(SolutionDir)..\lib\$(ProjectName)D.lib"</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>mkdir "$(SolutionDir)..\include"
+copy "$(ProjectDir)*.h" "$(SolutionDir)..\include"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)../include</AdditionalIncludeDirectories>
-      <AdditionalUsingDirectories>$(SolutionDir)../include</AdditionalUsingDirectories>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <DisableSpecificWarnings>4100; 4481;4201</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)../lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Common.lib;TinyXml.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(SolutionDir)..\lib"
+copy "$(ProjectDir)$(Configuration)\$(ProjectName).lib" "$(SolutionDir)..\lib\$(ProjectName).lib"</Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>mkdir "$(SolutionDir)..\include"
+copy "$(ProjectDir)*.h" "$(SolutionDir)..\include"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ColorMaterial.cpp" />
-    <ClCompile Include="ColorShader.cpp" />
-    <ClCompile Include="CubeMesh.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="TriangleMesh.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColorMaterial.h" />
-    <ClInclude Include="ColorShader.h" />
-    <ClInclude Include="CubeMesh.h" />
-    <ClInclude Include="TriangleMesh.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="ColorPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="ColorVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-    </FxCompile>
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

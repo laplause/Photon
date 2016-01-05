@@ -4,11 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\source\Common\Common.vcxproj", "{81E527FD-3B73-4E77-BF6B-95D81F87CB94}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2F9692C1-07A8-4CEB-B03C-694E1CB61D30} = {2F9692C1-07A8-4CEB-B03C-694E1CB61D30}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestApp", "..\source\TestApp\TestApp.vcxproj", "{19EF6EE9-6710-470B-93D0-A70F05D2A45A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{81E527FD-3B73-4E77-BF6B-95D81F87CB94} = {81E527FD-3B73-4E77-BF6B-95D81F87CB94}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TinyXml", "..\source\TinyXml\TinyXml.vcxproj", "{2F9692C1-07A8-4CEB-B03C-694E1CB61D30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +29,10 @@ Global
 		{19EF6EE9-6710-470B-93D0-A70F05D2A45A}.Debug|Win32.Build.0 = Debug|Win32
 		{19EF6EE9-6710-470B-93D0-A70F05D2A45A}.Release|Win32.ActiveCfg = Release|Win32
 		{19EF6EE9-6710-470B-93D0-A70F05D2A45A}.Release|Win32.Build.0 = Release|Win32
+		{2F9692C1-07A8-4CEB-B03C-694E1CB61D30}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2F9692C1-07A8-4CEB-B03C-694E1CB61D30}.Debug|Win32.Build.0 = Debug|Win32
+		{2F9692C1-07A8-4CEB-B03C-694E1CB61D30}.Release|Win32.ActiveCfg = Release|Win32
+		{2F9692C1-07A8-4CEB-B03C-694E1CB61D30}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
