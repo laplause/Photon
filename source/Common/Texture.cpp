@@ -2,7 +2,6 @@
 #include "PAssert.h"
 #include "Common.h"
 #include <WICTextureLoader.h>
-using namespace RenderCore;
 
 Texture::Texture() : mTexture(nullptr)
 {
@@ -45,7 +44,7 @@ ID3D11ShaderResourceView* Texture::GetTextureResource() const
 	return mTexture;
 }
 
-const PMath::Vec2& Texture::GetTextureDimensions() const
+const Vec2& Texture::GetTextureDimensions() const
 {
 	return mTextureDimensions;
 }

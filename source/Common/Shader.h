@@ -7,27 +7,24 @@
 #include "GameTime.h"
 #include "DirectXRenderer.h"
 
-namespace RenderCore
+//Class that defines a shader program
+class Shader
 {
-	//Class that defines a shader program
-	class Shader
-	{
-	public:
-		Shader(const std::string& shaderName);
-		virtual ~Shader();
+public:
+	Shader(const std::string& shaderName);
+	virtual ~Shader();
 
-		virtual void Update(const Core::GameTime& gameTime) = 0;
+	virtual void Update(const GameTime& gameTime) = 0;
 
-		const std::string& ShaderName() const;
+	const std::string& ShaderName() const;
 
-	protected:
-		char* mVertexShaderByteCode;
-		char* mPixelShaderByteCode;
-		unsigned int mVertexShaderFileSize;
-		unsigned int mPixelShaderFileSize;
+protected:
+	char* mVertexShaderByteCode;
+	char* mPixelShaderByteCode;
+	unsigned int mVertexShaderFileSize;
+	unsigned int mPixelShaderFileSize;
 
-	private:
-		std::string mName;
-	};
-}
+private:
+	std::string mName;
+};
 #endif

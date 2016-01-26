@@ -4,8 +4,6 @@
 #include "EngineState.h"
 #include "PAssert.h"
 
-namespace Photon
-{
 #define DELETEOBJECT(object) if((object) != nullptr) {delete object; object = nullptr;}
 #define DELETEOBJECTS(objects) if((objects) != nullptr) {delete[] objects; objects = nullptr;}
 #define RELEASEOBJECT(object) if((object) != nullptr) {object->Release(); object = nullptr;}
@@ -18,6 +16,5 @@ namespace Photon
     } while (0) \
 	__pragma(warning(pop))
 #endif
-}
 
 #endif

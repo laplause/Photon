@@ -1,6 +1,5 @@
 #include "SystemWindow.h"
 #include "PAssert.h"
-using namespace RenderCore;
 
 #if defined WINDOWS
 SystemWindow::SystemWindow(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand) : mInstance(instance),

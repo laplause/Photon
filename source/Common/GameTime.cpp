@@ -1,6 +1,5 @@
 #include "GameTime.h"
 #include "PAssert.h"
-using namespace Core;
 
 GameTime::GameTime() : mTotalGameTime(0), mDeltaTime(0), mStartTime(), mCurrentTime(), mLastTime(), mFrquency()
 {

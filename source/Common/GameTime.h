@@ -7,34 +7,31 @@
 #include <windows.h>
 #endif
 
-namespace Core
+class GameTime
 {
-	class GameTime
-	{
-	public:
-		GameTime();
+public:
+	GameTime();
 
-		double TotalGameTime() const;
-		double DeltaTime() const;
+	double TotalGameTime() const;
+	double DeltaTime() const;
 
-		void UpdateTime();
-		void Reset();
+	void UpdateTime();
+	void Reset();
 
-	private:
-		GameTime(const GameTime& rhs);
-		GameTime& operator=(const GameTime& rhs);
+private:
+	GameTime(const GameTime& rhs);
+	GameTime& operator=(const GameTime& rhs);
 
-		const double GetFrequency();
+	const double GetFrequency();
 
-		double mFrquency;
-		double mTotalGameTime;
-		double mDeltaTime;;
+	double mFrquency;
+	double mTotalGameTime;
+	double mDeltaTime;;
 
 #ifdef WINDOWS
-		LARGE_INTEGER mStartTime;
-		LARGE_INTEGER mCurrentTime;
-		LARGE_INTEGER mLastTime;
+	LARGE_INTEGER mStartTime;
+	LARGE_INTEGER mCurrentTime;
+	LARGE_INTEGER mLastTime;
 #endif
-	};
-}
+};
 #endif

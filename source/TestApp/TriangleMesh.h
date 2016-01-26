@@ -3,8 +3,6 @@
 
 #include "Mesh.h"
 #include "PMath.h"
-using namespace RenderCore;
-using namespace PMath;
 
 class TriangleMesh : public Mesh
 {

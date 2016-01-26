@@ -13,9 +13,7 @@
 #include <string>
 #include <windows.h>
 
-namespace PAssert
-{
-	static inline void ReportFailure(const char* condition, const char* fileName, int line, const char* msg);
+static inline void ReportFailure(const char* condition, const char* fileName, int line, const char* msg);
 
 #if defined WINDOWS
 #define HALT() __debugbreak();
@@ -26,7 +24,7 @@ namespace PAssert
 	MULTI_LINE_MACRO_BEGIN \
 		if (!(condition)) \
 		{ \
-		PAssert::ReportFailure(#condition, __FILE__, __LINE__, message); \
+			ReportFailure(#condition, __FILE__, __LINE__, message); \
 			HALT(); \
 		} \
 	MULTI_LINE_MACRO_END
@@ -35,18 +33,17 @@ namespace PAssert
 	do { (void)sizeof(condition); } while(0)
 #endif
 
-	static inline void ReportFailure(const char* condition, const char* fileName, int line, const char* msg)
-	{
-		char errorMessage[1024] = {0};
-		char lineNumber[6] = { 0 };
-		_itoa_s(line, lineNumber, sizeof(lineNumber), 10);
-		memcpy(errorMessage, fileName, sizeof(errorMessage));
-		strcat_s(errorMessage, sizeof(errorMessage), "\n");
-		strcat_s(errorMessage, sizeof(errorMessage), "line: ");
-		strcat_s(errorMessage, sizeof(errorMessage), lineNumber);
-		strcat_s(errorMessage, sizeof(errorMessage), "\n");
-		strcat_s(errorMessage, sizeof(errorMessage), msg);
-		MessageBox(nullptr, errorMessage, condition, MB_OK);
-	}
+static inline void ReportFailure(const char* condition, const char* fileName, int line, const char* msg)
+{
+	char errorMessage[1024] = {0};
+	char lineNumber[6] = { 0 };
+	_itoa_s(line, lineNumber, sizeof(lineNumber), 10);
+	memcpy(errorMessage, fileName, sizeof(errorMessage));
+	strcat_s(errorMessage, sizeof(errorMessage), "\n");
+	strcat_s(errorMessage, sizeof(errorMessage), "line: ");
+	strcat_s(errorMessage, sizeof(errorMessage), lineNumber);
+	strcat_s(errorMessage, sizeof(errorMessage), "\n");
+	strcat_s(errorMessage, sizeof(errorMessage), msg);
+	MessageBox(nullptr, errorMessage, condition, MB_OK);
 }
 #endif

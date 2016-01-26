@@ -1,5 +1,4 @@
 #include "OrthographicCamera.h"
-using namespace RenderCore;
 
 const float OrthoGraphicCamera::DefaultNearPlaneDistance = 0;
 const float OrthoGraphicCamera::DefaultFarPlaneDistance = 1.0f;
@@ -27,7 +26,7 @@ void OrthoGraphicCamera::Initialize()
 	Reset();
 }
 
-void OrthoGraphicCamera::Update(const Core::GameTime& gameTime)
+void OrthoGraphicCamera::Update(const GameTime& gameTime)
 {
 	UpdateViewMatrix();
 }
@@ -40,7 +39,7 @@ void OrthoGraphicCamera::Reset()
 
 void OrthoGraphicCamera::UpdateViewMatrix()
 {
-	mViewMatrix = PMath::Mat4x4(1, 0, 0, mTransform.row3.x,
+	mViewMatrix = Mat4x4(1, 0, 0, mTransform.row3.x,
 								0, 1, 0, mTransform.row3.y,
 								0, 0, 1, 0,
 								0, 0, 0, 1);
@@ -48,7 +47,7 @@ void OrthoGraphicCamera::UpdateViewMatrix()
 
 void OrthoGraphicCamera::UpdateProjectionMatrix()
 {
-	mProjectionMatrix = PMath::DirectXOrthoMatrix(mWidth, mHeight, mNearPlaneDistance, mFarPlaneDistance);
+	mProjectionMatrix = DirectXOrthoMatrix(mWidth, mHeight, mNearPlaneDistance, mFarPlaneDistance);
 }
 
 void OrthoGraphicCamera::SetPosition(float x, float y, float z)
@@ -56,7 +55,7 @@ void OrthoGraphicCamera::SetPosition(float x, float y, float z)
 	Camera::SetPosition(x, y, z);
 }
 
-void OrthoGraphicCamera::SetPosition(PMath::Vec3& position)
+void OrthoGraphicCamera::SetPosition(Vec3& position)
 {
 	Camera::SetPosition(position);
 }

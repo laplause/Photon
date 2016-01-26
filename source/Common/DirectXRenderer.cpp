@@ -1,7 +1,6 @@
 #include "DirectXRenderer.h"
 #include "PAssert.h"
 #include "DirectXShader.h"
-using namespace RenderCore;
 
 DirectXRenderer::DirectXRenderer(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand)
 : Renderer(instance, windowClass, windowTitle, showCommand),
@@ -209,12 +208,12 @@ void DirectXRenderer::InitializeDirectX()
 
 }
 
-void DirectXRenderer::Update(const Core::GameTime& gameTime)
+void DirectXRenderer::Update(const GameTime& gameTime)
 {
 	camera.Update(gameTime);
 }
 
-void DirectXRenderer::Draw(const Core::GameTime& gameTime)
+void DirectXRenderer::Draw(const GameTime& gameTime)
 {
 	mDirect3DDeviceContext->ClearRenderTargetView(mRenderTargertView, reinterpret_cast<const float*>(mBackGroundColor.data));
 	mDirect3DDeviceContext->ClearDepthStencilView(mDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);

@@ -18,57 +18,51 @@
 #include "PerspectiveCamera.h"
 #include "OrthographicCamera.h"
 
-using namespace PMath;
-using namespace RenderCore;
-
-namespace RenderCore
+// Concrete DirectXrendering class
+class DirectXRenderer : public Renderer
 {
-	// Concrete DirectXrendering class
-	class DirectXRenderer : public Renderer
-	{
-	public:
-		DirectXRenderer(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand);
-		virtual ~DirectXRenderer();
+public:
+	DirectXRenderer(HINSTANCE instance, const std::wstring& windowClass, const std::wstring& windowTitle, int showCommand);
+	virtual ~DirectXRenderer();
 
-		virtual void Initialize();
-		virtual void Shutdown();
-		virtual void Update(const Core::GameTime& gameTime);
-		virtual void Draw(const Core::GameTime& gameTime);
+	virtual void Initialize();
+	virtual void Shutdown();
+	virtual void Update(const GameTime& gameTime);
+	virtual void Draw(const GameTime& gameTime);
 
-		ID3D11Device* Direct3DDevice() const;
-		ID3D11DeviceContext* Direct3DDeviceContext() const;
-		bool DepthBufferEnabled() const;
-		bool IsFullScreen() const;
-		const D3D11_TEXTURE2D_DESC& BackBufferDesc() const;
-		const D3D11_VIEWPORT& Viewport() const;
-		const PerspectiveCamera& GetCamera() const;
+	ID3D11Device* Direct3DDevice() const;
+	ID3D11DeviceContext* Direct3DDeviceContext() const;
+	bool DepthBufferEnabled() const;
+	bool IsFullScreen() const;
+	const D3D11_TEXTURE2D_DESC& BackBufferDesc() const;
+	const D3D11_VIEWPORT& Viewport() const;
+	const PerspectiveCamera& GetCamera() const;
 
-	protected:
-		virtual void InitializeDirectX();
+protected:
+	virtual void InitializeDirectX();
 
-		D3D_FEATURE_LEVEL mFeatureLevel;
-		ID3D11Device* mDirect3DDevice;
-		ID3D11DeviceContext* mDirect3DDeviceContext;
-		IDXGISwapChain1* mSwapChain;
+	D3D_FEATURE_LEVEL mFeatureLevel;
+	ID3D11Device* mDirect3DDevice;
+	ID3D11DeviceContext* mDirect3DDeviceContext;
+	IDXGISwapChain1* mSwapChain;
 
-		ID3D11Texture2D* mDepthStencilBuffer;
-		D3D11_TEXTURE2D_DESC mBackBufferDesc;
-		ID3D11RenderTargetView* mRenderTargertView;
-		ID3D11DepthStencilView* mDepthStencilView;
-		D3D11_VIEWPORT mViewport;
+	ID3D11Texture2D* mDepthStencilBuffer;
+	D3D11_TEXTURE2D_DESC mBackBufferDesc;
+	ID3D11RenderTargetView* mRenderTargertView;
+	ID3D11DepthStencilView* mDepthStencilView;
+	D3D11_VIEWPORT mViewport;
 
-		unsigned int mFrameRate;
-		unsigned int mMultiSamplingCount;
-		unsigned int mMultiSamplingQualityLevels;
-		bool mDepthStencilBufferEnabled;
-		bool mMultiSamplingEnabled;
-		Vec4 mBackGroundColor;
+	unsigned int mFrameRate;
+	unsigned int mMultiSamplingCount;
+	unsigned int mMultiSamplingQualityLevels;
+	bool mDepthStencilBufferEnabled;
+	bool mMultiSamplingEnabled;
+	Vec4 mBackGroundColor;
 
-		PerspectiveCamera camera;
+	PerspectiveCamera camera;
 
-	private:
-		DirectXRenderer(const DirectXRenderer& rhs);
-		DirectXRenderer& operator=(const DirectXRenderer& rhs);
-	};
-}
+private:
+	DirectXRenderer(const DirectXRenderer& rhs);
+	DirectXRenderer& operator=(const DirectXRenderer& rhs);
+};
 #endif

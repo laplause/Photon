@@ -1,7 +1,6 @@
 #include "Renderer.h"
 #include "Common.h"
 #include "DirectXShader.h"
-using namespace RenderCore;
 
 Renderer::Renderer() : 
 mShaderTable(),

@@ -1,5 +1,4 @@
 #include "Component.h"
-using namespace Core;
 
 Component::Component(ComponentType type) :
 mType(type)

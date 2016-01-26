@@ -2,8 +2,6 @@
 #define COLORMATERIAL_H
 
 #include "Material.h"
-using namespace RenderCore;
-using namespace PMath;
 
 class ColorMaterial : public Material
 {

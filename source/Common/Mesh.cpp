@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include "Common.h"
-using namespace RenderCore;
 
 Mesh::Mesh(const std::string& meshName) :
 mName(meshName),

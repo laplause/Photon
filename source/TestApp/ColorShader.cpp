@@ -11,7 +11,7 @@ ColorShader::~ColorShader()
 
 }
 
-void ColorShader::Update(const Core::GameTime& gameTime)
+void ColorShader::Update(const GameTime& gameTime)
 {
 	DirectXShader::Update(gameTime);
 }

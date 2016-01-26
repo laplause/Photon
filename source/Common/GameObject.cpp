@@ -1,8 +1,7 @@
 #include "GameObject.h"
-using namespace Core;
 
 GameObject::GameObject()
-:mEnabled(true), mVisible(true), mTransform(PMath::CreateIdentity4x4())
+:mEnabled(true), mVisible(true), mTransform(CreateIdentity4x4())
 {
 	for (int i = 0; i < Component::COMPONENT_TYPE_MAX; i++)
 	{
@@ -11,7 +10,7 @@ GameObject::GameObject()
 }
 
 GameObject::GameObject(const std::string& objectName)
-: mEnabled(true), mVisible(true), mName(objectName), mTransform(PMath::CreateIdentity4x4())
+: mEnabled(true), mVisible(true), mName(objectName), mTransform(CreateIdentity4x4())
 {
 	for (int i = 0; i < Component::COMPONENT_TYPE_MAX; i++)
 	{
@@ -49,7 +48,7 @@ const std::string& GameObject::GetName() const
 	return mName;
 }
 
-const PMath::Mat4x4& GameObject::GetTransform() const
+Mat4x4& GameObject::GetTransform()
 {
 	return mTransform;
 }

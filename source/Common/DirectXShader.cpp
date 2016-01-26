@@ -1,7 +1,6 @@
 #include "DirectXShader.h"
 #include "Common.h"
 #include <fstream>
-using namespace RenderCore;
 
 DirectXShader::DirectXShader(const std::string& shaderName) : 
 Shader(shaderName), 
@@ -68,7 +67,7 @@ void DirectXShader::SetPerInstanceBuffer(ID3D11DeviceContext* deviceContext, Ren
 
 }
 
-void DirectXShader::Update(const Core::GameTime& gameTime)
+void DirectXShader::Update(const GameTime& gameTime)
 {
 	Shader::Update(gameTime);
 }

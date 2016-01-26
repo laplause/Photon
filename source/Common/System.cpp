@@ -1,5 +1,4 @@
 #include "System.h"
-using namespace Core;
 
 System::System()
 {

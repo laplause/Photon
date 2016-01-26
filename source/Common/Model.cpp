@@ -1,6 +1,5 @@
 #include "Model.h"
 #include "Common.h"
-using namespace RenderCore;
 
 Model::Model(const std::string& modelName) :
 mName(modelName), mMeshList()

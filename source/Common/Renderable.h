@@ -4,29 +4,24 @@
 #include "Component.h"
 #include "PMath.h"
 #include <string>
-using namespace PMath;
 
-namespace RenderCore
+class Model;
+class GameObject;
+
+class Renderable : public Component
 {
-	class Model;
+public:
+	Renderable(const std::string& modelName);
+	Renderable(Model* model, GameObject* go);
+	virtual ~Renderable();
 
-	class Renderable : public Core::Component
-	{
-	public:
-		Renderable(const std::string& modelName);
-		Renderable(Model* model);
-		virtual ~Renderable();
+	const Model* GetModel() const;
+	Mat4x4& GetTransform();
+	void SetPosition(float x, float y, float z);
+	void SetPosition(Vec3& position);
 
-		const Model* GetModel() const;
-		const Mat4x4& GetTransform() const;
-		void SetPosition(float x, float y, float z);
-		void SetPosition(Vec3& position);
-
-	protected:
-		Mat4x4 mTransform;
-
-	private:
-		Model* mModel;
-	};
-}
+private:
+	Model* mModel;
+	GameObject* mParent;
+};
 #endif

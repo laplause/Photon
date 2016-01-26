@@ -5,22 +5,19 @@
 #include <vector>
 #include "Mesh.h"
 
-namespace RenderCore
+class Model
 {
-	class Model
-	{
-	public:
-		Model(const std::string& modelName);
-		virtual ~Model();
+public:
+	Model(const std::string& modelName);
+	virtual ~Model();
 
-		const std::string& ModelName() const;
-		const std::vector<Mesh*>& GetMeshes() const;
+	const std::string& ModelName() const;
+	const std::vector<Mesh*>& GetMeshes() const;
 
-		void AddMesh(Mesh* mesh);
+	void AddMesh(Mesh* mesh);
 
-	private:
-		std::string mName;
-		std::vector<Mesh*> mMeshList;
-	};
-}
+private:
+	std::string mName;
+	std::vector<Mesh*> mMeshList;
+};
 #endif

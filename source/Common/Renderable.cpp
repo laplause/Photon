@@ -1,20 +1,18 @@
 #include "Renderable.h"
-using namespace RenderCore;
+#include "GameObject.h"
 
 Renderable::Renderable(const std::string& modelName) :
-Component(Core::Component::RENDERABLE), 
+Component(Component::RENDERABLE), 
 mModel(nullptr),
-mTransform()
+mParent(nullptr)
 {
-	mTransform = CreateIdentity4x4();
 }
 
-Renderable::Renderable(Model* model) :
-Component(Core::Component::RENDERABLE),
+Renderable::Renderable(Model* model, GameObject* go) :
+Component(Component::RENDERABLE),
 mModel(model),
-mTransform()
+mParent(go)
 {
-	mTransform = CreateIdentity4x4();
 }
 
 Renderable::~Renderable()
@@ -27,16 +25,16 @@ const Model* Renderable::GetModel() const
 	return mModel;
 }
 
-const Mat4x4& Renderable::GetTransform() const
+Mat4x4& Renderable::GetTransform()
 {
-	return mTransform;
+	return mParent->GetTransform();
 }
 
 void Renderable::SetPosition(float x, float y, float z)
 {
-	mTransform.row0.w = x;
-	mTransform.row1.w = y;
-	mTransform.row2.w = z;
+	GetTransform().row0.w = x;
+	GetTransform().row1.w = y;
+	GetTransform().row2.w = z;
 }
 
 void Renderable::SetPosition(Vec3& position)

@@ -1,7 +1,6 @@
 #include "Shader.h"
 #include "Common.h"
 #include <fstream>
-using namespace RenderCore;
 
 Shader::Shader(const std::string& shaderName) : 
 mName(shaderName), 
@@ -19,7 +18,7 @@ Shader::~Shader()
 	DELETEOBJECTS(mPixelShaderByteCode);
 }
 
-void Shader::Update(const Core::GameTime& gameTime)
+void Shader::Update(const GameTime& gameTime)
 {
 
 }

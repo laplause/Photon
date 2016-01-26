@@ -1,7 +1,6 @@
 #include "PerspectiveCamera.h"
-using namespace RenderCore;
 
-const float PerspectiveCamera::DefaultFieldOfView = PMath::PIOVERFOUR;
+const float PerspectiveCamera::DefaultFieldOfView = PIOVERFOUR;
 const float PerspectiveCamera::DefaultNearPlaneDistance = 0.01f;
 const float PerspectiveCamera::DefaultFarPlaneDistance = 100.0f;
 
@@ -28,7 +27,7 @@ void PerspectiveCamera::Initialize()
 	Reset();
 }
 
-void PerspectiveCamera::Update(const Core::GameTime& gameTime)
+void PerspectiveCamera::Update(const GameTime& gameTime)
 {
 	UpdateViewMatrix();
 }
@@ -41,16 +40,16 @@ void PerspectiveCamera::Reset()
 
 void PerspectiveCamera::UpdateViewMatrix()
 {
-	PMath::Vec3 position = PMath::Vec3(mTransform.row3.x, mTransform.row3.y, mTransform.row3.z);
-	PMath::Vec3 direction = PMath::Vec3(mTransform.row2.x, mTransform.row2.y, mTransform.row2.z);
-	PMath::Vec3 up = PMath::Vec3(mTransform.row1.x, mTransform.row1.y, mTransform.row1.z);
+	Vec3 position = Vec3(mTransform.row3.x, mTransform.row3.y, mTransform.row3.z);
+	Vec3 direction = Vec3(mTransform.row2.x, mTransform.row2.y, mTransform.row2.z);
+	Vec3 up = Vec3(mTransform.row1.x, mTransform.row1.y, mTransform.row1.z);
 
-	mViewMatrix = PMath::DirectXViewMatrix(position, direction, up);
+	mViewMatrix = DirectXViewMatrix(position, direction, up);
 }
 
 void PerspectiveCamera::UpdateProjectionMatrix()
 {
-	mProjectionMatrix = PMath::DirectXPerspectiveMatrix(mFieldOfView, mAspectRatio, mNearPlaneDistance, mFarPlaneDistance);
+	mProjectionMatrix = DirectXPerspectiveMatrix(mFieldOfView, mAspectRatio, mNearPlaneDistance, mFarPlaneDistance);
 }
 
 void PerspectiveCamera::SetAspectRatio(float aspectRatio)
@@ -64,7 +63,7 @@ void PerspectiveCamera::SetPosition(float x, float y, float z)
 	UpdateViewMatrix();
 }
 
-void PerspectiveCamera::SetPosition(PMath::Vec3& position)
+void PerspectiveCamera::SetPosition(Vec3& position)
 {
-	mTransform.row3 = PMath::Vec4(position, 1.0f);
+	mTransform.row3 = Vec4(position, 1.0f);
 }

@@ -5,12 +5,11 @@
 #include "TriangleMesh.h"
 #include "CubeMesh.h"
 #include "Model.h"
-using namespace RenderCore;
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
-	Core::GameTime gameTime;
-	RenderCore::DirectXRenderer dx(instance, L"RenderWindow", L"blah", showCommand);
+	GameTime gameTime;
+	DirectXRenderer dx(instance, L"RenderWindow", L"blah", showCommand);
 	dx.Initialize();
 
 	ColorShader* cs = new ColorShader("ColorShader");
@@ -29,17 +28,21 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	CubeMesh* c = new CubeMesh("Cube");
 	c->Initialize(&dx);
 
-	RenderCore::Model* m = new Model("Cube");
+	Model* m = new Model("Cube");
 	m->AddMesh(c);
 
-	RenderCore::Model* mt = new Model("Triangle");
+	Model* mt = new Model("Triangle");
 	mt->AddMesh(tm);
 
-	Renderable *r = new Renderable(m);
+	GameObject* go = new GameObject("Cube1");
+	GameObject* got = new GameObject("Triangle");
+	GameObject* go2 = new GameObject("Cube2");
+
+	Renderable *r = new Renderable(m, go);
 	r->SetPosition(5.0f, 0, 0.0f);
-	Renderable* offsetR = new Renderable(m);
+	Renderable* offsetR = new Renderable(m, go2);
 	offsetR->SetPosition(-5.0f, 0, 0);
-	Renderable* t = new Renderable(mt);
+	Renderable* t = new Renderable(mt, got);
 
 	dx.AddModel("Cube", m);
 	dx.AddModel("Triangle", mt);
