@@ -1,8 +1,8 @@
 #include "TriangleMesh.h"
 #include "DirectXRenderer.h"
 
-TriangleMesh::TriangleMesh(const std::string& meshName) :
-Mesh(meshName)
+TriangleMesh::TriangleMesh(const std::string& meshName, Model* model) :
+Mesh(meshName, model)
 {
 
 }

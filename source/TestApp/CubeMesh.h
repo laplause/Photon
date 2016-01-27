@@ -13,7 +13,7 @@ public:
 		Vec4 color;
 	};
 
-	CubeMesh(const std::string& meshName);
+	CubeMesh(const std::string& meshName, Model* model);
 	virtual ~CubeMesh();
 
 	virtual void Initialize(DirectXRenderer* renderer);

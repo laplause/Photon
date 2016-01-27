@@ -18,20 +18,22 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	ColorMaterial* cm = new ColorMaterial("ColorMaterial", nullptr);
 	cm->Initialize();
 
-	dx.AddShader(cs->ShaderName(), cs);
-	dx.AddMaterial("ColorMaterial", cm);
-	dx.LinkMaterialToShader("ColorShader", "ColorMaterial");
-
-	TriangleMesh* tm = new TriangleMesh("Triangle");
-	tm->Initialize(&dx);
-
-	CubeMesh* c = new CubeMesh("Cube");
-	c->Initialize(&dx);
-
-	Model* m = new Model("Cube");
-	m->AddMesh(c);
+	dx.AddShader(cs);
+	dx.LinkMaterialToShader(cs, cm);
 
 	Model* mt = new Model("Triangle");
+	Model* m = new Model("Cube");
+
+	TriangleMesh* tm = new TriangleMesh("Triangle", mt);
+	tm->Initialize(&dx);
+
+	CubeMesh* c = new CubeMesh("Cube", m);
+	c->Initialize(&dx);
+
+	dx.LinkMeshToMaterial(cm, tm);
+	dx.LinkMeshToMaterial(cm, c);
+
+	m->AddMesh(c);
 	mt->AddMesh(tm);
 
 	GameObject* go = new GameObject("Cube1");
@@ -45,15 +47,12 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	go->SetPosition(5.0f, 0, 0);
 	go2->SetPosition(-5.0f, 0, 0);
 
-	dx.AddModel("Cube", m);
-	dx.AddModel("Triangle", mt);
+	dx.LinkRenderableToModel(m, r);
+	dx.LinkRenderableToModel(m, offsetR);
+	dx.LinkRenderableToModel(mt, t);
 
-	dx.AddRenderable(r);
-	dx.AddRenderable(offsetR);
-
-	dx.LinkRenderableToMaterial("ColorMaterial", r);
-	dx.LinkRenderableToMaterial("ColorMaterial", offsetR);
-	dx.LinkRenderableToMaterial("ColorMaterial", t);
+	dx.AddModel(m);
+	dx.AddModel(mt);
 
 	MSG message;
 	ZeroMemory(&message, sizeof(message));

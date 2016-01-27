@@ -1,8 +1,8 @@
 #include "CubeMesh.h"
 #include "DirectXRenderer.h"
 
-CubeMesh::CubeMesh(const std::string& meshName) :
-Mesh(meshName)
+CubeMesh::CubeMesh(const std::string& meshName, Model* model) :
+Mesh(meshName, model)
 {
 
 }

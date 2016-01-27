@@ -13,7 +13,7 @@ public:
 		Vec4 color;
 	};
 
-	TriangleMesh(const std::string& meshName);
+	TriangleMesh(const std::string& meshName, Model* model);
 	virtual ~TriangleMesh();
 
 	virtual void Initialize(DirectXRenderer* renderer);

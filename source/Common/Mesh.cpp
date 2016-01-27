@@ -1,8 +1,9 @@
 #include "Mesh.h"
 #include "Common.h"
 
-Mesh::Mesh(const std::string& meshName) :
+Mesh::Mesh(const std::string& meshName, Model* model) :
 mName(meshName),
+mParentModel(model),
 mIndexBuffer(nullptr),
 mVertexBuffer(nullptr),
 mIndexCount(0),
@@ -20,6 +21,11 @@ Mesh::~Mesh()
 const std::string& Mesh::MeshName() const
 {
 	return mName;
+}
+
+Model* Mesh::ParentModel() const
+{
+	return mParentModel;
 }
 
 void Mesh::Initialize(DirectXRenderer* renderer)

@@ -28,28 +28,23 @@ public:
 	virtual void Shutdown();
 	virtual void Update(const GameTime& gameTime);
 
-	void AddShader(const std::string& shaderName, DirectXShader* shader);
-	void AddMaterial(const std::string& materialName, Material* material);
-	void AddModel(const std::string& modelName, Model* model);
-	void AddRenderable(Renderable* renderable);
+	void AddShader(DirectXShader* shader);
+	void AddModel(Model* model);
 
-	Material* GetMaterial(const std::string& materialName);
-	DirectXShader* GetShader(const std::string& shaderName);
-	Model* GetModel(const std::string& modelName);
-
-	void LinkMaterialToShader(const std::string& shaderName, const std::string& materialName);
-	void LinkMaterialToShader(const std::string& shaderName, Material* material);
-	void LinkRenderableToMaterial(const std::string& materialName, Renderable* renderable);
+	void LinkMaterialToShader(DirectXShader* shader, Material* material);
+	void LinkMeshToMaterial(Material* material, Mesh* mesh);
+	void LinkRenderableToModel(Model* model, Renderable* renderable);
 
 	const SystemWindow* GetWindow() const;
 
 protected:
-	std::map<std::string, DirectXShader*> mShaderTable;
-	std::map<std::string, Material*> mMaterialTable;
-	std::map<std::string, Model*> mModelTable;
-	std::vector<Renderable*> mRenderableList;
-	std::map<std::string, std::vector<Material*> > mShaderIndexToMaterialMap;
-	std::map<std::string, std::vector<Renderable*> > mMaterialIndexToRenderableMap;
+	std::vector<DirectXShader*> mShaderList;
+	std::vector<Model*> mModelList;
+
+	std::map<DirectXShader*, std::vector<Material*> > mShaderToMaterialMap;
+	std::map<Material*, std::vector<Mesh*> > mMaterialToMeshMap;
+	std::map<Model*, std::vector<Renderable*> > mModelToRenderableMap;
+
 	SystemWindow* mWindow;
 	unsigned int mScreenWidth;
 	unsigned int mScreeHeight;

@@ -221,27 +221,30 @@ void DirectXRenderer::Draw(const GameTime& gameTime)
 	// Render all the active/visible render components. 
 	// Components are currently batched by material. This assumes every model uses one material (this assumption will be worked on later to allow multi material models)
 	// Materials are batched by the shader they use. All of this reduces the amount of render state that needs to change between draw calls.
-	for (std::map<std::string, DirectXShader*>::iterator sIt = mShaderTable.begin(); sIt != mShaderTable.end(); ++sIt)
+	for (std::vector<DirectXShader*>::iterator shaderIt = mShaderList.begin(); shaderIt != mShaderList.end(); ++shaderIt)
 	{
 		// Set the active shader
-		DirectXShader* shader = sIt->second;
+		DirectXShader* shader = *shaderIt;
 		shader->SetActiveShader(mDirect3DDeviceContext);
 		shader->SetPerFrameBuffer(mDirect3DDeviceContext, &camera);
 
-		std::vector<Material*>& materials = mShaderIndexToMaterialMap[sIt->second->ShaderName()];
-		for (std::vector<Material*>::iterator mIt = materials.begin(); mIt != materials.end(); ++mIt)
+		std::vector<Material*>& materials = mShaderToMaterialMap[shader];
+		for (std::vector<Material*>::iterator materialIt = materials.begin(); materialIt != materials.end(); ++materialIt)
 		{
 			// Do material stuff
-			std::vector<Renderable*>& renderables = mMaterialIndexToRenderableMap[(*mIt)->MaterialName()];
-			for (std::vector<Renderable*>::iterator rIt = renderables.begin(); rIt != renderables.end(); ++rIt)
-			{
-				shader->SetPerInstanceBuffer(mDirect3DDeviceContext, *rIt);
-				
-				const std::vector<Mesh*>& meshes = (*rIt)->GetModel()->GetMeshes();
+			Material* material = *materialIt;
 
-				for (std::vector<Mesh*>::const_iterator it = meshes.begin(); it != meshes.end(); ++it)
+			std::vector<Mesh*>& meshes = mMaterialToMeshMap[material];
+			for (std::vector<Mesh*>::iterator meshIt = meshes.begin(); meshIt != meshes.end(); ++meshIt)
+			{
+				Mesh* mesh = *meshIt;
+
+				std::vector<Renderable*>& renderables = mModelToRenderableMap[mesh->ParentModel()];
+				for (std::vector<Renderable*>::iterator renderableIt = renderables.begin(); renderableIt != renderables.end(); ++renderableIt)
 				{
-					Mesh* mesh = (*it);
+					Renderable* renderable = *renderableIt;
+					
+					shader->SetPerInstanceBuffer(mDirect3DDeviceContext, renderable);
 
 					unsigned int stride = mesh->VertexSize();
 					unsigned int offset = 0;
