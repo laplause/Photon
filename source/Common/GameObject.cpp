@@ -52,3 +52,15 @@ Mat4x4& GameObject::GetTransform()
 {
 	return mTransform;
 }
+
+void GameObject::SetPosition(float x, float y, float z)
+{
+	mTransform.row0.w = x;
+	mTransform.row1.w = y;
+	mTransform.row2.w = z;
+}
+
+void GameObject::SetPosition(Vec3& position)
+{
+	SetPosition(position.x, position.y, position.z);
+}

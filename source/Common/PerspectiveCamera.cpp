@@ -59,11 +59,11 @@ void PerspectiveCamera::SetAspectRatio(float aspectRatio)
 
 void PerspectiveCamera::SetPosition(float x, float y, float z)
 {
-	Camera::SetPosition(x, y, z);
-	UpdateViewMatrix();
+	SetPosition(Vec3(x, y, z));
 }
 
 void PerspectiveCamera::SetPosition(Vec3& position)
 {
-	mTransform.row3 = Vec4(position, 1.0f);
+	Camera::SetPosition(position);
+	UpdateViewMatrix();
 }

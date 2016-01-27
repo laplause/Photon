@@ -39,10 +39,11 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 	GameObject* go2 = new GameObject("Cube2");
 
 	Renderable *r = new Renderable(m, go);
-	r->SetPosition(5.0f, 0, 0.0f);
 	Renderable* offsetR = new Renderable(m, go2);
-	offsetR->SetPosition(-5.0f, 0, 0);
 	Renderable* t = new Renderable(mt, got);
+
+	go->SetPosition(5.0f, 0, 0);
+	go2->SetPosition(-5.0f, 0, 0);
 
 	dx.AddModel("Cube", m);
 	dx.AddModel("Triangle", mt);

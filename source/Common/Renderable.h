@@ -17,8 +17,6 @@ public:
 
 	const Model* GetModel() const;
 	Mat4x4& GetTransform();
-	void SetPosition(float x, float y, float z);
-	void SetPosition(Vec3& position);
 
 private:
 	Model* mModel;

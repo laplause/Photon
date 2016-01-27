@@ -21,6 +21,9 @@ public:
 	const std::string& GetName() const;
 	Mat4x4& GetTransform();
 
+	virtual void SetPosition(float x, float y, float z);
+	virtual void SetPosition(Vec3& position);
+
 protected:
 	Mat4x4 mTransform;
 	Component* mComponents[Component::COMPONENT_TYPE_MAX];

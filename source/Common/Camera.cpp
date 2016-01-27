@@ -27,9 +27,7 @@ void Camera::Update(const GameTime& gameTime)
 
 void Camera::SetPosition(float x, float y, float z)
 {
-	mTransform.row3.x = x;
-	mTransform.row3.y = y;
-	mTransform.row3.z = z;
+	SetPosition(Vec3(x, y, z));
 }
 
 void Camera::SetPosition(Vec3& position)
