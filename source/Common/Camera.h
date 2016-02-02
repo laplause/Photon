@@ -19,7 +19,8 @@ public:
 	virtual void SetPosition(float x, float y, float z);
 	virtual void SetPosition(Vec3& position);
 
-	const Vec4& GetPosition() const;
+	virtual const Vec3& GetPosition() const;
+	const Vec4& GetVec4Position() const;
 	const Vec4& GetForward() const;
 	const Vec4& GetUp() const;
 	const Vec4& GetRight() const;

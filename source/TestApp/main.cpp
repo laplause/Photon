@@ -5,12 +5,19 @@
 #include "TriangleMesh.h"
 #include "CubeMesh.h"
 #include "Model.h"
+#include "Input.h"
+#include "ServiceLocator.h"
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
 	GameTime gameTime;
+	ServiceLocator::Provide(&gameTime);
+
 	DirectXRenderer dx(instance, L"RenderWindow", L"blah", showCommand);
 	dx.Initialize();
+
+	Input input(dx);
+	ServiceLocator::Provide(&input);
 
 	ColorShader* cs = new ColorShader("ColorShader");
 	cs->Initialize("..//..//bin//ColorVS.cso", "..//..//bin//ColorPS.cso", &dx);
@@ -67,6 +74,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 		else
 		{
 			gameTime.UpdateTime();
+			input.Update(gameTime);
 
 			dx.Update(gameTime);
 			dx.Draw(gameTime);

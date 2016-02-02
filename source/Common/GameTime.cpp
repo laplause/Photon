@@ -19,7 +19,7 @@ double GameTime::DeltaTime() const
 
 void GameTime::UpdateTime()
 {
-	QueryPerformanceFrequency(&mCurrentTime);
+	QueryPerformanceCounter(&mCurrentTime);
 	mTotalGameTime = (mCurrentTime.QuadPart - mStartTime.QuadPart) / mFrquency;
 	mDeltaTime = (mCurrentTime.QuadPart - mLastTime.QuadPart) / mFrquency;
 	mLastTime = mCurrentTime;
@@ -34,7 +34,7 @@ const double GameTime::GetFrequency()
 
 void GameTime::Reset()
 {
-	QueryPerformanceFrequency(&mStartTime);
+	QueryPerformanceCounter(&mStartTime);
 	mCurrentTime = mStartTime;
 	mLastTime = mCurrentTime;
 }

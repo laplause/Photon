@@ -35,7 +35,7 @@ void DirectXRenderer::Initialize()
 	camera.Reset();
 	camera.SetAspectRatio((float)mScreenWidth/(float)mScreeHeight);
 	camera.Initialize();
-	camera.SetPosition(0.0f, 0, -10.0f);
+	camera.SetPosition(0.0f, 0, -15.0f);
 }
 
 void DirectXRenderer::Shutdown()

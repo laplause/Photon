@@ -1,4 +1,6 @@
 #include "PerspectiveCamera.h"
+#include "Input.h"
+#include "ServiceLocator.h"
 
 const float PerspectiveCamera::DefaultFieldOfView = PIOVERFOUR;
 const float PerspectiveCamera::DefaultNearPlaneDistance = 0.01f;
@@ -29,6 +31,13 @@ void PerspectiveCamera::Initialize()
 
 void PerspectiveCamera::Update(const GameTime& gameTime)
 {
+	Input* inputSystem = ServiceLocator::GetInput();
+
+	if (inputSystem->IsKeyDown(DIK_W))
+		MoveForward();
+	else if (inputSystem->IsKeyDown(DIK_S))
+		MoveBackward();
+
 	UpdateViewMatrix();
 }
 
