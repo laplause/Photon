@@ -6,7 +6,9 @@
 Input::Input(const Renderer& renderer) :
 mDirectInput(nullptr),
 mKeyboard(nullptr),
-mMouse(nullptr)
+mMouse(nullptr),
+mButtonW(nullptr),
+mButtonS(nullptr)
 {
 	DirectInput8Create(renderer.GetWindow()->GetInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&mDirectInput, nullptr);
 	Initialize(renderer);
@@ -14,15 +16,10 @@ mMouse(nullptr)
 
 Input::~Input()
 {
-	if (mKeyboard)
-	{
-		DELETEOBJECT(mKeyboard);
-	}
-
-	if (mMouse)
-	{
-		DELETEOBJECT(mMouse);
-	}
+	DELETEOBJECT(mKeyboard);
+	DELETEOBJECT(mMouse);
+	DELETEOBJECT(mButtonW);
+	DELETEOBJECT(mButtonS);
 }
 
 void Input::Initialize(const Renderer& renderer)
@@ -35,6 +32,29 @@ void Input::Update(const GameTime& gameTime)
 {
 	mKeyboard->Update(gameTime);
 	mMouse->Update(gameTime);
+}
+
+GameObjectCommand* Input::HandleInput() const
+{
+	if (IsKeyDown(DIK_W)) return mButtonW;
+	if (IsKeyDown(DIK_S)) return mButtonS;
+
+	return nullptr;
+}
+
+void Input::SetCommand(GameObjectCommand* command, unsigned char key)
+{
+	if (command != nullptr)
+	{
+		if (key == DIK_W)
+		{
+			mButtonW = command;
+		}
+		else if (key == DIK_S)
+		{
+			mButtonS = command;
+		}
+	}
 }
 
 bool Input::IsKeyUp(unsigned char key) const

@@ -1,11 +1,9 @@
 #ifndef GAMEOBJECTCOMMAND_H
 #define GAMEOBJECTCOMMAND_H
 
-#include "Command.h"
-
 class GameObject;
 
-class GameObjectCommand : public Command
+class GameObjectCommand
 {
 public:
 	GameObjectCommand();

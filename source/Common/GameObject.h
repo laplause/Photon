@@ -17,6 +17,11 @@ public:
 	virtual ~GameObject();
 
 	virtual void Update(const GameTime&  gameTime);
+	virtual void SetPosition(float x, float y, float z);
+	virtual void SetPosition(Vec3& position);
+	virtual const Vec3& GetPosition() const;
+	virtual void MoveForward();
+	virtual void MoveBackward();
 
 	bool isEnabled();
 	bool isVisible();
@@ -29,18 +34,10 @@ public:
 	const std::string& GetName() const;
 	Mat4x4& GetTransform();
 
-	virtual void SetPosition(float x, float y, float z);
-	virtual void SetPosition(Vec3& position);
-
-	virtual const Vec3& GetPosition() const;
-
 protected:
 	Mat4x4 mTransform;
 	float mVelocity;
 	Component* mComponents[Component::COMPONENT_TYPE_MAX];
-
-	virtual void MoveForward();
-	virtual void MoveBackward();
 
 private:
 	bool mEnabled;

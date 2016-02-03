@@ -114,6 +114,8 @@ copy "$(ProjectDir)$(Configuration)\$(ProjectName).lib" "$(SolutionDir)..\lib\$(
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="MoveBackward.h" />
+    <ClInclude Include="MoveForward.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="PAssert.h" />
     <ClInclude Include="PerspectiveCamera.h" />
@@ -141,6 +143,8 @@ copy "$(ProjectDir)$(Configuration)\$(ProjectName).lib" "$(SolutionDir)..\lib\$(
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="MoveBackward.cpp" />
+    <ClCompile Include="MoveForward.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="PerspectiveCamera.cpp" />
     <ClCompile Include="Renderable.cpp" />

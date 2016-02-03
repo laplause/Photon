@@ -4,6 +4,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 
+class GameObjectCommand;
+
 class Input
 {
 public:
@@ -11,6 +13,10 @@ public:
 	~Input();
 
 	void Update(const GameTime& gameTime);
+	void SetCommand(GameObjectCommand* command, unsigned char key);
+
+	GameObjectCommand* HandleInput() const;
+
 
 	//Keyboard Interface
 	bool IsKeyUp(unsigned char key) const;
@@ -43,5 +49,9 @@ private:
 	LPDIRECTINPUT8 mDirectInput;
 	Keyboard* mKeyboard;
 	Mouse* mMouse;
+
+	// Commands
+	GameObjectCommand* mButtonW;
+	GameObjectCommand* mButtonS;
 };
 #endif

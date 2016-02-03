@@ -7,6 +7,8 @@
 #include "Model.h"
 #include "Input.h"
 #include "ServiceLocator.h"
+#include "MoveForward.h"
+#include "MoveBackward.h"
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
@@ -18,6 +20,9 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 
 	Input input(dx);
 	ServiceLocator::Provide(&input);
+
+	input.SetCommand(new MoveForward(), DIK_W);
+	input.SetCommand(new MoveBackward(), DIK_S);
 
 	ColorShader* cs = new ColorShader("ColorShader");
 	cs->Initialize("..//..//bin//ColorVS.cso", "..//..//bin//ColorPS.cso", &dx);
