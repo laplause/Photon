@@ -62,8 +62,8 @@ void CubeMesh::Initialize(DirectXRenderer* renderer)
 	indices[3] = 0; indices[4] = 2; indices[5] = 3;
 
 	// Back face
-	indices[6] = 4; indices[7] = 5; indices[8] = 6;
-	indices[9] = 4; indices[10] = 6; indices[11] = 7;
+	indices[6] = 4; indices[7] = 6; indices[8] = 5;
+	indices[9] = 4; indices[10] = 7; indices[11] = 6;
 
 	// Left face
 	indices[12] = 4; indices[13] = 5; indices[14] = 1;

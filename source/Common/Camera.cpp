@@ -32,13 +32,14 @@ void Camera::SetPosition(float x, float y, float z)
 
 void Camera::SetPosition(Vec3& position)
 {
-	mTransform.row3 = Vec4(position, 1.0f);
+	mTransform.row0.w = position.x;
+	mTransform.row1.w = position.y;
+	mTransform.row2.w = position.z;
 }
 
 const Vec3 Camera::GetPosition() const
 {
-	Vec4 position = mTransform.row3;
-	return Vec3(position.x, position.y, position.z);
+	return Vec3(mTransform.row0.w, mTransform.row1.w, mTransform.row2.w);
 }
 
 const Vec4& Camera::GetVec4Position() const
