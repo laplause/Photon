@@ -35,7 +35,7 @@ void Camera::SetPosition(Vec3& position)
 	mTransform.row3 = Vec4(position, 1.0f);
 }
 
-const Vec3& Camera::GetPosition() const
+const Vec3 Camera::GetPosition() const
 {
 	Vec4 position = mTransform.row3;
 	return Vec3(position.x, position.y, position.z);

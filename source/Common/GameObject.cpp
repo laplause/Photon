@@ -91,7 +91,7 @@ void GameObject::SetPosition(Vec3& position)
 	SetPosition(position.x, position.y, position.z);
 }
 
-const Vec3& GameObject::GetPosition() const
+const Vec3 GameObject::GetPosition() const
 {
 	return Vec3(mTransform.row0.w, mTransform.row1.w, mTransform.row2.w);
 }
@@ -99,7 +99,7 @@ const Vec3& GameObject::GetPosition() const
 void GameObject::MoveForward()
 {
 	Vec3 position = GetPosition();
-	position.z += mVelocity*ServiceLocator::GetGameTime()->DeltaTime();
+	position.z += (float)(mVelocity*ServiceLocator::GetGameTime()->DeltaTime());
 
 	SetPosition(position);
 }
@@ -107,7 +107,7 @@ void GameObject::MoveForward()
 void GameObject::MoveBackward()
 {
 	Vec3 position = GetPosition();
-	position.z -= mVelocity*ServiceLocator::GetGameTime()->DeltaTime();
+	position.z -= (float)(mVelocity*ServiceLocator::GetGameTime()->DeltaTime());
 
 	SetPosition(position);
 }
