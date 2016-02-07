@@ -32,8 +32,6 @@ void PerspectiveCamera::Initialize()
 
 void PerspectiveCamera::Update(const GameTime& gameTime)
 {
-	static bool once = true;
-
 	Input* inputSystem = ServiceLocator::GetInput();
 
 	GameObjectCommand* command = inputSystem->HandleInput();
@@ -42,9 +40,9 @@ void PerspectiveCamera::Update(const GameTime& gameTime)
 		command->Execute(*this);
 	}
 
-	UpdateViewMatrix();
+	mDirection = mDirection * YRotationMatrix3x3(25.0f * gameTime.DeltaTime());
 
-	mTransform = mTransform * MatrixRotationY(1.0f*gameTime.DeltaTime());
+	UpdateViewMatrix();
 }
 
 void PerspectiveCamera::Reset()
@@ -55,11 +53,7 @@ void PerspectiveCamera::Reset()
 
 void PerspectiveCamera::UpdateViewMatrix()
 {
-	Vec3 position = Vec3(mTransform.row0.w, mTransform.row1.w, mTransform.row2.w);
-	Vec3 direction = Vec3(mTransform.row2.x, mTransform.row2.y, mTransform.row2.z);
-	Vec3 up = Vec3(mTransform.row1.x, mTransform.row1.y, mTransform.row1.z);
-
-	mViewMatrix = DirectXViewMatrix(position, direction, up);
+	mViewMatrix = DirectXViewMatrix(mPosition, mDirection, mUp);
 }
 
 void PerspectiveCamera::UpdateProjectionMatrix()

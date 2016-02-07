@@ -19,6 +19,7 @@ const float PI = 3.14159265359f;     //180 degrees
 const float TWOPI = PI * 2.0f;       //360 degrees
 const float PIOVERTWO = PI * 0.5f;   //90 degrees
 const float PIOVERFOUR = PI * 0.25f; //45 degrees
+const float DEGREESTORADIANS = PI / 180.0f;
 
 
 // Templated by type and size Vector
@@ -459,10 +460,11 @@ inline Mat4x4 Translate(Vec3& position, Mat4x4& transform)
 }
 
 // This is a left handed rotation column matrix which rotates about the X axis.
-inline Mat4x4 MatrixRotationX(float angle)
+inline Mat4x4 XRotationMatrix(float angle)
 {
-	float sinOfAngle = sin(angle);
-	float cosOfAngle = cos(angle);
+	float angleInDegrees = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInDegrees);
+	float cosOfAngle = cos(angleInDegrees);
 
 	return Mat4x4(1, 0,           0,          0,
 			        0, cosOfAngle,  sinOfAngle, 0,
@@ -470,11 +472,23 @@ inline Mat4x4 MatrixRotationX(float angle)
 			        0, 0,           0,          1);
 }
 
-// This is a left handed rotation column matrix which rotates about the Y axis.
-inline Mat4x4 MatrixRotationY(float angle)
+inline Mat3x3 XRotationMatrix3x3(float angle)
 {
-	float sinOfAngle = sin(angle);
-	float cosOfAngle = cos(angle);
+	float angleInDegrees = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInDegrees);
+	float cosOfAngle = cos(angleInDegrees);
+
+	return Mat3x3(1, 0,           0,
+				  0, cosOfAngle,  sinOfAngle,
+				  0, -sinOfAngle, cosOfAngle);
+}
+
+// This is a left handed rotation column matrix which rotates about the Y axis.
+inline Mat4x4 YRotationMatrix(float angle)
+{
+	float angleInDegrees = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInDegrees);
+	float cosOfAngle = cos(angleInDegrees);
 
 	return Mat4x4(cosOfAngle, 0, -sinOfAngle, 0,
 			        0,          1, 0,           0,
@@ -482,16 +496,39 @@ inline Mat4x4 MatrixRotationY(float angle)
 			        0,          0, 0,           1);
 }
 
-// This is a left handed rotation column matrix which rotates about the Z axis.
-inline Mat4x4 MatrixRotationZ(float angle)
+inline Mat3x3 YRotationMatrix3x3(float angle)
 {
-	float sinOfAngle = sin(angle);
-	float cosOfAngle = cos(angle);
+	float angleInDegrees = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInDegrees);
+	float cosOfAngle = cos(angleInDegrees);
+
+	return Mat3x3(cosOfAngle,  0, -sinOfAngle,
+				  0,		   1, 0,
+				  sinOfAngle, 0, cosOfAngle);
+}
+
+// This is a left handed rotation column matrix which rotates about the Z axis.
+inline Mat4x4 ZRotationMatrix(float angle)
+{
+	float angleInDegrees = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInDegrees);
+	float cosOfAngle = cos(angleInDegrees);
 
 	return Mat4x4(cosOfAngle,  sinOfAngle, 0, 0,
 			        -sinOfAngle, cosOfAngle, 0, 0,
 			        0,           0,          1, 0,
 			        0,           0,          0, 1);
+}
+
+inline Mat3x3 ZRotationMatrix3x3(float angle)
+{
+	float angleInDegrees = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInDegrees);
+	float cosOfAngle = cos(angleInDegrees);
+
+	return Mat3x3(cosOfAngle,  sinOfAngle, 0,
+				  -sinOfAngle, cosOfAngle, 0,
+				  0,           0,          1);
 }
 
 // Vector operations
@@ -740,14 +777,16 @@ inline Mat4x4 Inverse(const Mat4x4& m)
 inline Mat4x4 DirectXViewMatrix(Vec3& cameraPosition, Vec3& lookingDirection, Vec3& up)
 {
 	Vec3 zAxis = Normalize(lookingDirection);
-	Vec3 xAxis = Cross(up, zAxis);
+	Vec3 yAxis = Normalize(up);
+	Vec3 xAxis = Cross(yAxis, zAxis);
 	xAxis = Normalize(xAxis);
-	Vec3 yAxis = Cross(zAxis, xAxis);
+	yAxis = Cross(zAxis, xAxis);
+	Normalize(yAxis);
 		
 	return Mat4x4(xAxis.x, xAxis.y, xAxis.z, -Dot(cameraPosition, xAxis),
-			        yAxis.x, yAxis.y, yAxis.z, -Dot(cameraPosition, yAxis),
-					zAxis.x, zAxis.y, zAxis.z, -Dot(cameraPosition, zAxis),
-			        0,       0,       0,       1);
+				  yAxis.x, yAxis.y, yAxis.z, -Dot(cameraPosition, yAxis),
+				  zAxis.x, zAxis.y, zAxis.z, -Dot(cameraPosition, zAxis),
+			      0,       0,       0,       1);
 }
 
 // This is a left handed orthographic projection row matrix which uses a view volume depth of 0 to 1

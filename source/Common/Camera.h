@@ -33,6 +33,10 @@ protected:
 	Mat4x4 mViewMatrix;
 	Mat4x4 mProjectionMatrix;
 
+	Vec3 mPosition;
+	Vec3 mDirection;
+	Vec3 mUp;
+
 private:
 	Camera(const Camera& rhs);
 	Camera& operator=(const Camera& rhs);
