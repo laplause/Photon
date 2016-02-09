@@ -49,11 +49,6 @@ const Vec3 Camera::GetPosition() const
 	return mPosition;
 }
 
-const Vec4& Camera::GetVec4Position() const
-{
-	return mTransform.row3;
-}
-
 const Mat4x4& Camera::ViewMatrix() const
 {
 	return mViewMatrix;
@@ -67,4 +62,9 @@ const Mat4x4& Camera::ProjectionMatrix() const
 const Mat4x4& Camera::ViewProjectionMatrix() const
 {
 	return mViewMatrix * mProjectionMatrix;
+}
+
+const Vec4& Camera::GetVec4Position() const
+{
+	return mTransform.row3;
 }

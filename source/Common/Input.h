@@ -12,8 +12,16 @@ public:
 	Input(const Renderer& renderer);
 	~Input();
 
+	enum MouseFeature
+	{
+		XMOVEMENT = 0,
+		YMOVEMENT,
+		MOUSEFEATUREMAX
+	};
+
 	void Update(const GameTime& gameTime);
 	void SetCommand(GameObjectCommand* command, unsigned char key);
+	void SetCommand(GameObjectCommand* command, const MouseFeature mouseFeature);
 
 	GameObjectCommand* HandleInput() const;
 
@@ -53,5 +61,7 @@ private:
 	// Commands
 	GameObjectCommand* mButtonW;
 	GameObjectCommand* mButtonS;
+	GameObjectCommand* mMouseX;
+	GameObjectCommand* mMouseY;
 };
 #endif

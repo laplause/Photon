@@ -6,15 +6,25 @@
 const float PerspectiveCamera::DefaultFieldOfView = PIOVERFOUR;
 const float PerspectiveCamera::DefaultNearPlaneDistance = 0.01f;
 const float PerspectiveCamera::DefaultFarPlaneDistance = 100.0f;
+const float PerspectiveCamera::DefaultMouseSensitivity = 100.0f;
 
 PerspectiveCamera::PerspectiveCamera()
-: Camera(), mFieldOfView(DefaultFieldOfView), mNearPlaneDistance(DefaultNearPlaneDistance), mFarPlaneDistance(DefaultFarPlaneDistance)
+: Camera(), 
+mFieldOfView(DefaultFieldOfView), 
+mNearPlaneDistance(DefaultNearPlaneDistance), 
+mFarPlaneDistance(DefaultFarPlaneDistance),
+mMouseSensitivity(DefaultMouseSensitivity)
 {
 
 }
 
 PerspectiveCamera::PerspectiveCamera(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
-: Camera(), mFieldOfView(fieldOfView), mAspectRatio(aspectRatio), mNearPlaneDistance(nearPlaneDistance), mFarPlaneDistance(farPlaneDistance)
+: Camera(), 
+mFieldOfView(fieldOfView), 
+mAspectRatio(aspectRatio), 
+mNearPlaneDistance(nearPlaneDistance), 
+mFarPlaneDistance(farPlaneDistance),
+mMouseSensitivity(DefaultMouseSensitivity)
 {
 
 }
@@ -40,7 +50,9 @@ void PerspectiveCamera::Update(const GameTime& gameTime)
 		command->Execute(*this);
 	}
 
-	mDirection = mDirection * YRotationMatrix3x3(25.0f * gameTime.DeltaTime());
+	//RotateLeft();
+
+	//mDirection = mDirection * YRotationMatrix3x3(2.0f * gameTime.DeltaTime());
 
 	UpdateViewMatrix();
 }
@@ -75,4 +87,42 @@ void PerspectiveCamera::SetPosition(Vec3& position)
 {
 	Camera::SetPosition(position);
 	UpdateViewMatrix();
+}
+
+void PerspectiveCamera::MoveForward()
+{
+	Vec3 position = GetPosition();
+	position += Normalize(mDirection) * (float)(mVelocity * ServiceLocator::GetGameTime()->DeltaTime());
+
+	SetPosition(position);
+}
+
+void PerspectiveCamera::MoveBackward()
+{
+	Vec3 position = GetPosition();
+	position -= Normalize(mDirection) * (float)(mVelocity * ServiceLocator::GetGameTime()->DeltaTime());
+
+	SetPosition(position);
+}
+
+void PerspectiveCamera::RotateLeft()
+{
+	float rotationAmount = ServiceLocator::GetInput()->X() /* mMouseSensitivity*/ * mRotationRate * ServiceLocator::GetGameTime()->DeltaTime();
+
+	mDirection = Normalize(mDirection) * YRotationMatrix3x3(rotationAmount);
+}
+
+void PerspectiveCamera::RotateRight()
+{
+
+}
+
+void PerspectiveCamera::RotateUp()
+{
+
+}
+
+void PerspectiveCamera::RotateDown()
+{
+
 }

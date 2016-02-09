@@ -20,6 +20,8 @@ Input::~Input()
 	DELETEOBJECT(mMouse);
 	DELETEOBJECT(mButtonW);
 	DELETEOBJECT(mButtonS);
+	DELETEOBJECT(mMouseX);
+	DELETEOBJECT(mMouseY);
 }
 
 void Input::Initialize(const Renderer& renderer)
@@ -38,6 +40,8 @@ GameObjectCommand* Input::HandleInput() const
 {
 	if (IsKeyDown(DIK_W)) return mButtonW;
 	if (IsKeyDown(DIK_S)) return mButtonS;
+	if (X() != 0) return mMouseX;
+	if (Y() != 0) return mMouseY;
 
 	return nullptr;
 }
@@ -54,6 +58,21 @@ void Input::SetCommand(GameObjectCommand* command, unsigned char key)
 		{
 			mButtonS = command;
 		}
+	}
+}
+
+void Input::SetCommand(GameObjectCommand* command, const MouseFeature mouseFeature)
+{
+	switch (mouseFeature)
+	{
+	case MouseFeature::XMOVEMENT:
+		mMouseX = command;
+		break;
+	case MouseFeature::YMOVEMENT:
+		mMouseY = command;
+		break;
+	default:
+		break;
 	}
 }
 

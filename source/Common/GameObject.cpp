@@ -3,12 +3,14 @@
 #include "GameTime.h"
 
 const float GameObject::DefaultVelocity = 5.0f;
+const float GameObject::DefaultRotationRate = 5.0f;
 
 GameObject::GameObject()
 :mEnabled(true), 
 mVisible(true), 
 mTransform(CreateIdentity4x4()),
-mVelocity(DefaultVelocity)
+mVelocity(DefaultVelocity),
+mRotationRate(DefaultRotationRate)
 {
 	for (int i = 0; i < Component::COMPONENT_TYPE_MAX; i++)
 	{
@@ -21,7 +23,8 @@ GameObject::GameObject(const std::string& objectName)
 mVisible(true), 
 mName(objectName), 
 mTransform(CreateIdentity4x4()),
-mVelocity(DefaultVelocity)
+mVelocity(DefaultVelocity),
+mRotationRate(DefaultRotationRate)
 {
 	for (int i = 0; i < Component::COMPONENT_TYPE_MAX; i++)
 	{
@@ -110,4 +113,24 @@ void GameObject::MoveBackward()
 	position.z -= (float)(mVelocity*ServiceLocator::GetGameTime()->DeltaTime());
 
 	SetPosition(position);
+}
+
+void GameObject::RotateLeft()
+{
+
+}
+
+void GameObject::RotateRight()
+{
+
+}
+
+void GameObject::RotateUp()
+{
+
+}
+
+void GameObject::RotateDown()
+{
+
 }

@@ -19,6 +19,14 @@ public:
 
 	virtual void SetPosition(float x, float y, float z);
 	virtual void SetPosition(Vec3& position);
+
+	virtual void MoveForward();
+	virtual void MoveBackward();
+	virtual void RotateLeft();
+	virtual void RotateRight();
+	virtual void RotateUp();
+	virtual void RotateDown();
+
 	void SetAspectRatio(float aspectRatio);
 
 	static const float DefaultFieldOfView;
@@ -27,6 +35,9 @@ public:
 	static const float DefaultFarPlaneDistance;
 
 protected:
+	static const float DefaultMouseSensitivity;
+
+	float mMouseSensitivity;
 	float mFieldOfView;
 	float mAspectRatio;
 	float mNearPlaneDistance;
