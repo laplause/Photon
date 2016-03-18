@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sdf
+*.opensdf
 *.sln.docstates
 
 # Build results

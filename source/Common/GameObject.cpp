@@ -3,7 +3,7 @@
 #include "GameTime.h"
 
 const float GameObject::DefaultVelocity = 5.0f;
-const float GameObject::DefaultRotationRate = 5.0f;
+const float GameObject::DefaultRotationRate = 8.0f;
 
 GameObject::GameObject()
 :mEnabled(true), 
@@ -115,22 +115,18 @@ void GameObject::MoveBackward()
 	SetPosition(position);
 }
 
-void GameObject::RotateLeft()
+void GameObject::MoveLeft()
 {
+	Vec3 position = GetPosition();
+	position.x -= (float)(mVelocity*ServiceLocator::GetGameTime()->DeltaTime());
 
+	SetPosition(position);
 }
 
-void GameObject::RotateRight()
+void GameObject::MoveRight()
 {
+	Vec3 position = GetPosition();
+	position.x += (float)(mVelocity*ServiceLocator::GetGameTime()->DeltaTime());
 
-}
-
-void GameObject::RotateUp()
-{
-
-}
-
-void GameObject::RotateDown()
-{
-
+	SetPosition(position);
 }

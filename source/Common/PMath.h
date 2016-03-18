@@ -148,6 +148,7 @@ struct Vector<T, 3>
 	Vector(T x, T y, T z) : x(x), y(y), z(z) {}
 	explicit Vector(T value) : x(value), y(value), z(value) {}
 	Vector(Vec2& xy, T z) : x(xy.x), y(xy.y), z(z) {}
+	Vector(Vec4& xyz) : x(xyz.x), y(xyz.y), z(xyz.z) {}
 	T& operator[](unsigned int component) { return data[component]; }
 	const T& operator[](unsigned int component) const { return data[component]; }
 	Vector<T, 3>& operator+=(const Vector<T, 3>& rhs)
@@ -462,9 +463,9 @@ inline Mat4x4 Translate(Vec3& position, Mat4x4& transform)
 // This is a left handed rotation column matrix which rotates about the X axis.
 inline Mat4x4 XRotationMatrix(float angle)
 {
-	float angleInDegrees = angle * DEGREESTORADIANS;
-	float sinOfAngle = sin(angleInDegrees);
-	float cosOfAngle = cos(angleInDegrees);
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
 
 	return Mat4x4(1, 0,           0,          0,
 			        0, cosOfAngle,  sinOfAngle, 0,
@@ -474,9 +475,9 @@ inline Mat4x4 XRotationMatrix(float angle)
 
 inline Mat3x3 XRotationMatrix3x3(float angle)
 {
-	float angleInDegrees = angle * DEGREESTORADIANS;
-	float sinOfAngle = sin(angleInDegrees);
-	float cosOfAngle = cos(angleInDegrees);
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
 
 	return Mat3x3(1, 0,           0,
 				  0, cosOfAngle,  sinOfAngle,
@@ -486,9 +487,9 @@ inline Mat3x3 XRotationMatrix3x3(float angle)
 // This is a left handed rotation column matrix which rotates about the Y axis.
 inline Mat4x4 YRotationMatrix(float angle)
 {
-	float angleInDegrees = angle * DEGREESTORADIANS;
-	float sinOfAngle = sin(angleInDegrees);
-	float cosOfAngle = cos(angleInDegrees);
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
 
 	return Mat4x4(cosOfAngle, 0, -sinOfAngle, 0,
 			        0,          1, 0,           0,
@@ -498,9 +499,9 @@ inline Mat4x4 YRotationMatrix(float angle)
 
 inline Mat3x3 YRotationMatrix3x3(float angle)
 {
-	float angleInDegrees = angle * DEGREESTORADIANS;
-	float sinOfAngle = sin(angleInDegrees);
-	float cosOfAngle = cos(angleInDegrees);
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
 
 	return Mat3x3(cosOfAngle,  0, -sinOfAngle,
 				  0,		   1, 0,
@@ -510,9 +511,9 @@ inline Mat3x3 YRotationMatrix3x3(float angle)
 // This is a left handed rotation column matrix which rotates about the Z axis.
 inline Mat4x4 ZRotationMatrix(float angle)
 {
-	float angleInDegrees = angle * DEGREESTORADIANS;
-	float sinOfAngle = sin(angleInDegrees);
-	float cosOfAngle = cos(angleInDegrees);
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
 
 	return Mat4x4(cosOfAngle,  sinOfAngle, 0, 0,
 			        -sinOfAngle, cosOfAngle, 0, 0,
@@ -522,13 +523,35 @@ inline Mat4x4 ZRotationMatrix(float angle)
 
 inline Mat3x3 ZRotationMatrix3x3(float angle)
 {
-	float angleInDegrees = angle * DEGREESTORADIANS;
-	float sinOfAngle = sin(angleInDegrees);
-	float cosOfAngle = cos(angleInDegrees);
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
 
 	return Mat3x3(cosOfAngle,  sinOfAngle, 0,
 				  -sinOfAngle, cosOfAngle, 0,
 				  0,           0,          1);
+}
+
+inline Mat3x3 VectorRotationMatrix(float angle, const Vec3& axis)
+{
+	float angleInRadians = angle * DEGREESTORADIANS;
+	float sinOfAngle = sin(angleInRadians);
+	float cosOfAngle = cos(angleInRadians);
+	float oneMinusCos = 1 - cosOfAngle;
+
+	float axisXSquared = axis.x * axis.x;
+	float axisYSquared = axis.y * axis.y;
+	float axisZSquared = axis.z * axis.z;
+
+	return Mat3x3((axisXSquared * oneMinusCos) + cosOfAngle,
+				  (axis.x * axis.y * oneMinusCos) + (axis.z * sinOfAngle),
+				  (axis.x * axis.z * oneMinusCos) - (axis.y * sinOfAngle),
+				  (axis.x * axis.y * oneMinusCos) - (axis.z * sinOfAngle),
+				  (axisYSquared * oneMinusCos) + cosOfAngle,
+				  (axis.y * axis.z * oneMinusCos) + (axis.x * sinOfAngle),
+				  (axis.x * axis.z * oneMinusCos) + (axis.y * sinOfAngle),
+				  (axis.y * axis.z * oneMinusCos) - (axis.x * sinOfAngle),
+				  (axisZSquared * oneMinusCos) + cosOfAngle);
 }
 
 // Vector operations

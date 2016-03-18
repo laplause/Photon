@@ -8,7 +8,8 @@ mDirectInput(nullptr),
 mKeyboard(nullptr),
 mMouse(nullptr),
 mButtonW(nullptr),
-mButtonS(nullptr)
+mButtonS(nullptr),
+mCommandList(20)
 {
 	DirectInput8Create(renderer.GetWindow()->GetInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (LPVOID*)&mDirectInput, nullptr);
 	Initialize(renderer);
@@ -20,8 +21,8 @@ Input::~Input()
 	DELETEOBJECT(mMouse);
 	DELETEOBJECT(mButtonW);
 	DELETEOBJECT(mButtonS);
-	DELETEOBJECT(mMouseX);
-	DELETEOBJECT(mMouseY);
+	DELETEOBJECT(mButtonA);
+	DELETEOBJECT(mButtonD);
 }
 
 void Input::Initialize(const Renderer& renderer)
@@ -34,16 +35,17 @@ void Input::Update(const GameTime& gameTime)
 {
 	mKeyboard->Update(gameTime);
 	mMouse->Update(gameTime);
+	mCommandList.clear();
 }
 
-GameObjectCommand* Input::HandleInput() const
+const std::vector<GameObjectCommand*>& Input::HandleInput()
 {
-	if (IsKeyDown(DIK_W)) return mButtonW;
-	if (IsKeyDown(DIK_S)) return mButtonS;
-	if (X() != 0) return mMouseX;
-	if (Y() != 0) return mMouseY;
+	if (IsKeyDown(DIK_W)) mCommandList.push_back(mButtonW);
+	if (IsKeyDown(DIK_S)) mCommandList.push_back(mButtonS);
+	if (IsKeyDown(DIK_A)) mCommandList.push_back(mButtonA);
+	if (IsKeyDown(DIK_D)) mCommandList.push_back(mButtonD);
 
-	return nullptr;
+	return mCommandList;
 }
 
 void Input::SetCommand(GameObjectCommand* command, unsigned char key)
@@ -58,21 +60,14 @@ void Input::SetCommand(GameObjectCommand* command, unsigned char key)
 		{
 			mButtonS = command;
 		}
-	}
-}
-
-void Input::SetCommand(GameObjectCommand* command, const MouseFeature mouseFeature)
-{
-	switch (mouseFeature)
-	{
-	case MouseFeature::XMOVEMENT:
-		mMouseX = command;
-		break;
-	case MouseFeature::YMOVEMENT:
-		mMouseY = command;
-		break;
-	default:
-		break;
+		else if (key == DIK_A)
+		{
+			mButtonA = command;
+		}
+		else if (key == DIK_D)
+		{
+			mButtonD = command;
+		}
 	}
 }
 

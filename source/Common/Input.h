@@ -3,8 +3,8 @@
 
 #include "Keyboard.h"
 #include "Mouse.h"
-
-class GameObjectCommand;
+#include "GameObjectCommand.h"
+#include <vector>
 
 class Input
 {
@@ -12,18 +12,11 @@ public:
 	Input(const Renderer& renderer);
 	~Input();
 
-	enum MouseFeature
-	{
-		XMOVEMENT = 0,
-		YMOVEMENT,
-		MOUSEFEATUREMAX
-	};
-
 	void Update(const GameTime& gameTime);
 	void SetCommand(GameObjectCommand* command, unsigned char key);
-	void SetCommand(GameObjectCommand* command, const MouseFeature mouseFeature);
 
-	GameObjectCommand* HandleInput() const;
+	
+	const std::vector<GameObjectCommand*>& HandleInput();
 
 
 	//Keyboard Interface
@@ -61,7 +54,9 @@ private:
 	// Commands
 	GameObjectCommand* mButtonW;
 	GameObjectCommand* mButtonS;
-	GameObjectCommand* mMouseX;
-	GameObjectCommand* mMouseY;
+	GameObjectCommand* mButtonA;
+	GameObjectCommand* mButtonD;
+
+	std::vector<GameObjectCommand*> mCommandList;
 };
 #endif

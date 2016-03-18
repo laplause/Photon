@@ -6,7 +6,8 @@ mViewMatrix(),
 mProjectionMatrix(),
 mPosition(),
 mDirection(),
-mUp()
+mUp(),
+mRight()
 {
 
 }
@@ -20,6 +21,7 @@ void Camera::Reset()
 {
 	mTransform = CreateIdentity4x4();
 	mPosition = Vec3(0, 0, 0);
+	mRight = Vec3(1.0f, 0, 0);
 	mDirection = Vec3(0, 0, 1.0f);
 	mUp = Vec3(0, 1.0f, 0);
 }
@@ -67,4 +69,19 @@ const Mat4x4& Camera::ViewProjectionMatrix() const
 const Vec4& Camera::GetVec4Position() const
 {
 	return mTransform.row3;
+}
+
+const Vec3& Camera::GetForward() const
+{
+	return mDirection;
+}
+
+const Vec3& Camera::GetRight() const
+{
+	return mRight;
+}
+
+const Vec3& Camera::GetUp() const
+{
+	return mUp;
 }

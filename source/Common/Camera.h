@@ -21,9 +21,9 @@ public:
 
 	virtual const Vec3 GetPosition() const;
 	const Vec4& GetVec4Position() const;
-	const Vec4& GetForward() const;
-	const Vec4& GetUp() const;
-	const Vec4& GetRight() const;
+	const Vec3& GetForward() const;
+	const Vec3& GetUp() const;
+	const Vec3& GetRight() const;
 
 	const Mat4x4& ViewMatrix() const;
 	const Mat4x4& ProjectionMatrix() const;
@@ -35,6 +35,7 @@ protected:
 
 	Vec3 mPosition;
 	Vec3 mDirection;
+	Vec3 mRight;
 	Vec3 mUp;
 
 private:

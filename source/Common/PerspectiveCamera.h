@@ -22,10 +22,8 @@ public:
 
 	virtual void MoveForward();
 	virtual void MoveBackward();
-	virtual void RotateLeft();
-	virtual void RotateRight();
-	virtual void RotateUp();
-	virtual void RotateDown();
+	virtual void MoveLeft();
+	virtual void MoveRight();
 
 	void SetAspectRatio(float aspectRatio);
 
@@ -35,6 +33,8 @@ public:
 	static const float DefaultFarPlaneDistance;
 
 protected:
+	virtual void CalculateRotation();
+
 	static const float DefaultMouseSensitivity;
 
 	float mMouseSensitivity;

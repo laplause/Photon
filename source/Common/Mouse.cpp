@@ -56,9 +56,9 @@ void Mouse::Update(const GameTime& gameTime)
 			}
 		}
 
-		mX += mCurrentState.lX;
-		mY += mCurrentState.lY;
-		mWheel += mCurrentState.lZ;
+		mX = mCurrentState.lX;
+		mY = mCurrentState.lY;
+		mWheel = mCurrentState.lZ;
 	}
 }
 

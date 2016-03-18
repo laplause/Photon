@@ -7,11 +7,10 @@ class MoveForward : public GameObjectCommand
 {
 public:
 	MoveForward();
+	MoveForward(const MoveForward& rhs) = delete;
+	const MoveForward& operator=(const MoveForward& rhs) = delete;
+
 	virtual ~MoveForward();
 	virtual void Execute(GameObject& go);
-
-private:
-	MoveForward(const MoveForward& rhs);
-	const MoveForward& operator=(const MoveForward& rhs);
 };
 #endif

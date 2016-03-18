@@ -24,10 +24,8 @@ public:
 
 	virtual void MoveForward();
 	virtual void MoveBackward();
-	virtual void RotateLeft();
-	virtual void RotateRight();
-	virtual void RotateUp();
-	virtual void RotateDown();
+	virtual void MoveLeft();
+	virtual void MoveRight();
 
 	bool isEnabled();
 	bool isVisible();

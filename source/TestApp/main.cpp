@@ -9,7 +9,8 @@
 #include "ServiceLocator.h"
 #include "MoveForward.h"
 #include "MoveBackward.h"
-#include "RotateLeftOrRight.h"
+#include "MoveLeft.h"
+#include "MoveRight.h"
 
 int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR commandLine, int showCommand)
 {
@@ -24,7 +25,8 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE previousInstance, LPSTR command
 
 	input.SetCommand(new MoveForward(), DIK_W);
 	input.SetCommand(new MoveBackward(), DIK_S);
-	input.SetCommand(new RotateLeftOrRight(), Input::MouseFeature::XMOVEMENT);
+	input.SetCommand(new MoveLeft(), DIK_A);
+	input.SetCommand(new MoveRight(), DIK_D);
 
 	ColorShader* cs = new ColorShader("ColorShader");
 	cs->Initialize("..//..//bin//ColorVS.cso", "..//..//bin//ColorPS.cso", &dx);

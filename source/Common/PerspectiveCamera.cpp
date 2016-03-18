@@ -6,7 +6,7 @@
 const float PerspectiveCamera::DefaultFieldOfView = PIOVERFOUR;
 const float PerspectiveCamera::DefaultNearPlaneDistance = 0.01f;
 const float PerspectiveCamera::DefaultFarPlaneDistance = 100.0f;
-const float PerspectiveCamera::DefaultMouseSensitivity = 100.0f;
+const float PerspectiveCamera::DefaultMouseSensitivity = 25.0f;
 
 PerspectiveCamera::PerspectiveCamera()
 : Camera(), 
@@ -15,7 +15,7 @@ mNearPlaneDistance(DefaultNearPlaneDistance),
 mFarPlaneDistance(DefaultFarPlaneDistance),
 mMouseSensitivity(DefaultMouseSensitivity)
 {
-
+	SetVelocity(20.0f);
 }
 
 PerspectiveCamera::PerspectiveCamera(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
@@ -26,7 +26,7 @@ mNearPlaneDistance(nearPlaneDistance),
 mFarPlaneDistance(farPlaneDistance),
 mMouseSensitivity(DefaultMouseSensitivity)
 {
-
+	SetVelocity(20.0f);
 }
 
 PerspectiveCamera::~PerspectiveCamera()
@@ -44,15 +44,18 @@ void PerspectiveCamera::Update(const GameTime& gameTime)
 {
 	Input* inputSystem = ServiceLocator::GetInput();
 
-	GameObjectCommand* command = inputSystem->HandleInput();
-	if (command != nullptr)
+	std::vector<GameObjectCommand*> commands = inputSystem->HandleInput();
+
+	for (auto& it = commands.begin(); it != commands.end(); ++it)
 	{
-		command->Execute(*this);
+		GameObjectCommand* command = *it;
+		if (command != nullptr)
+		{
+			command->Execute(*this);
+		}
 	}
 
-	//RotateLeft();
-
-	//mDirection = mDirection * YRotationMatrix3x3(2.0f * gameTime.DeltaTime());
+	CalculateRotation();
 
 	UpdateViewMatrix();
 }
@@ -66,6 +69,7 @@ void PerspectiveCamera::Reset()
 void PerspectiveCamera::UpdateViewMatrix()
 {
 	mViewMatrix = DirectXViewMatrix(mPosition, mDirection, mUp);
+	mRight = mViewMatrix.row0;
 }
 
 void PerspectiveCamera::UpdateProjectionMatrix()
@@ -105,24 +109,28 @@ void PerspectiveCamera::MoveBackward()
 	SetPosition(position);
 }
 
-void PerspectiveCamera::RotateLeft()
+void PerspectiveCamera::MoveLeft()
 {
-	float rotationAmount = ServiceLocator::GetInput()->X() /* mMouseSensitivity*/ * mRotationRate * ServiceLocator::GetGameTime()->DeltaTime();
+	Vec3 position = GetPosition();
+	position -= Normalize(mRight) * (float)(mVelocity * ServiceLocator::GetGameTime()->DeltaTime());
 
-	mDirection = Normalize(mDirection) * YRotationMatrix3x3(rotationAmount);
+	SetPosition(position);
 }
 
-void PerspectiveCamera::RotateRight()
+void PerspectiveCamera::MoveRight()
 {
+	Vec3 position = GetPosition();
+	position += Normalize(mRight) * (float)(mVelocity * ServiceLocator::GetGameTime()->DeltaTime());
 
+	SetPosition(position);
 }
 
-void PerspectiveCamera::RotateUp()
+void PerspectiveCamera::CalculateRotation()
 {
+	float rotationAmount = mMouseSensitivity * mRotationRate * ServiceLocator::GetGameTime()->DeltaTime();
+	Vec2 rotations(rotationAmount * ServiceLocator::GetInput()->X(), rotationAmount * ServiceLocator::GetInput()->Y());
 
-}
-
-void PerspectiveCamera::RotateDown()
-{
-
+	Mat3x3 transform = YRotationMatrix3x3(rotations.x) * VectorRotationMatrix(rotations.y, mRight);
+	mUp = mUp * transform;
+	mDirection = mDirection * transform;
 }
